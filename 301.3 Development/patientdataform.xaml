@@ -1,0 +1,62 @@
+﻿<Page x:Class="_301._3_Development.patientdataform"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_301._3_Development"
+      mc:Ignorable="d" d:DesignWidth="350"
+      Title="patientdataform"
+      Background="White" Height="340">
+
+    <Grid Margin="20,20,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Registration Form" 
+                   FontSize="18" FontWeight="Bold" 
+                   HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Patient’s Data" 
+                   Grid.Row="1" Foreground="Blue" 
+                   FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <Grid Grid.Row="2" Margin="0,0,0,48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Name" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Contact No" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Passport No" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Appointment Date" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Place Of Birth" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Date Of Birth" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
+            <TextBlock Text="Sex" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Margin="5,2"/>
+            <TextBox Grid.Row="6" Grid.Column="1" Margin="5,2"/>
+        </Grid>
+
+        <Button Grid.Row="2" Content="Next" Width="70" Height="30" 
+                HorizontalAlignment="Right" Margin="0,212,0,18"/>
+    </Grid>
+</Page>
