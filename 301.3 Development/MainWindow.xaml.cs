@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.Scripts;
 
 namespace _301._3_Development
 {
@@ -19,6 +20,16 @@ namespace _301._3_Development
         public MainWindow()
         {
             InitializeComponent();
+
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataHandler handler = new DataHandler();
+
+            handler.PrintPatients();
+
         }
     }
 }

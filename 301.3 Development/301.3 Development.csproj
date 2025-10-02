@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="Scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119" />
   </ItemGroup>
 
 </Project>
