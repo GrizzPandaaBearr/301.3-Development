@@ -28,8 +28,10 @@ namespace _301._3_Development
         {
             DataHandler handler = new DataHandler();
 
-            handler.PrintPatients();
+            List<Patient> patients = handler.GetPatients();
 
+            PatientDataGrid.ItemsSource = patients;
+            
         }
     }
 }
