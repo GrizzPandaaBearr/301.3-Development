@@ -42,11 +42,26 @@ namespace _301._3_Development.Scripts
 
             using var reader = command.ExecuteReader();
 
+            
             while (reader.Read())
             {
-                /*var name = reader.GetString(0);
-                Debug.WriteLine($"This is {name}");*/
-                Debug.WriteLine(reader.GetString(1));
+                int columnCount = reader.FieldCount;
+                Debug.WriteLine(columnCount);
+                for(int i = 0; i < columnCount; i++)
+                {
+                    if (i == 0)
+                    {
+                        Debug.Write( $"Patient ID: {reader.GetInt32(i)} ");
+                    }
+                    else
+                    {
+                        string valid = reader.GetString(i).ToString();
+
+                        Debug.Write($"[ {valid} ]");
+
+                    }
+                    
+                }
             }
 
             connection.Close();
