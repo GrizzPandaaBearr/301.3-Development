@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using _301._3_Development.Scripts;
 using _301._3_Development.Windows;
 
+
 namespace _301._3_Development
 {
     /// <summary>
@@ -27,15 +28,15 @@ namespace _301._3_Development
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e)
         {
-            Patientdataform patientdataform = new Patientdataform();
-            patientdataform.
+            PatientRegistration patientRegistration = new PatientRegistration();
+            patientRegistration.ShowDialog();
+            
         }
 
         private void ShowPatients_Click(object sender, RoutedEventArgs e)
         {
             DEBUGWINDOW dEBUGWINDOW = new DEBUGWINDOW();
             dEBUGWINDOW.ShowDialog();
-            Visibility = Visibility.Hidden;
         }
     }
 }
