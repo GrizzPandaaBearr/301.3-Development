@@ -48,10 +48,16 @@
             <TextBox x:Name="NameBox" Grid.Row="0" Grid.Column="1" Margin="5,2"/>
             <TextBox x:Name="PhoneBox" Grid.Row="1" Grid.Column="1" Margin="5,2"/>
             <TextBox x:Name="PassportBox" Grid.Row="2" Grid.Column="1" Margin="5,2"/>
-            <TextBlock Text="AppointmentDay" x:Name="AppointmentBox" Grid.Row="3" Grid.Column="1" Margin="5,2"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+                <TextBlock Text="AppointmentDay" x:Name="AppointmentBox" Grid.Row="3" Grid.Column="1" Margin="5,2"/>
+                <Button x:Name="PickBirthdayBtn" Content="Select" Margin="5,2"/>
+            </StackPanel>
+            
             <TextBox x:Name="BirthPlaceBox" Grid.Row="4" Grid.Column="1" Margin="5,2"/>
-            <TextBlock Text="AppointmentDay" x:Name="BirthDateBox" Grid.Row="5" Grid.Column="1" Margin="5,2"/>
-            <Button />
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
+                <TextBlock Text="BithdayDay" x:Name="BirthDateBox" Grid.Row="5" Grid.Column="1" Margin="5,2"/>
+                <Button x:Name="PickAppointmentBtn" Content="Select" Margin="5,2"/>
+            </StackPanel>
             <TextBox x:Name="GenderBox" Grid.Row="6" Grid.Column="1" Margin="5,2"/>
         </Grid>
 
