@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using _301._3_Development.Scripts;
+using _301._3_Development.Windows;
 
 namespace _301._3_Development
 {
@@ -24,14 +25,17 @@ namespace _301._3_Development
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewPatientBtn_Click(object sender, RoutedEventArgs e)
         {
-            DataHandler handler = new DataHandler();
+            Patientdataform patientdataform = new Patientdataform();
+            patientdataform.
+        }
 
-            List<Patient> patients = handler.GetPatients();
-
-            PatientDataGrid.ItemsSource = patients;
-            
+        private void ShowPatients_Click(object sender, RoutedEventArgs e)
+        {
+            DEBUGWINDOW dEBUGWINDOW = new DEBUGWINDOW();
+            dEBUGWINDOW.ShowDialog();
+            Visibility = Visibility.Hidden;
         }
     }
 }

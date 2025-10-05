@@ -7,11 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
         <StackPanel>
-            <Button Content="Test Data" Click="Button_Click" />
-            <DataGrid Name="PatientDataGrid"/>
+            <Button x:Name="NewPatientBtn" Content="New Patient" Click="NewPatientBtn_Click"></Button>
+            <Button x:Name="ShowPatients" Content="Show Patients" Click="ShowPatients_Click"></Button>
+
         </StackPanel>
 
+        
     </Grid>
 </Window>
