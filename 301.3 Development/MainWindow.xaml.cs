@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using _301._3_Development.Scripts;
 using _301._3_Development.Windows;
+using _301._3_Development.Pages;
 
 
 namespace _301._3_Development
@@ -28,15 +29,21 @@ namespace _301._3_Development
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e)
         {
-            PatientRegistration patientRegistration = new PatientRegistration();
-            patientRegistration.ShowDialog();
-            
+            /*PatientRegistration patientRegistration = new PatientRegistration();
+            patientRegistration.ShowDialog();*/
+            _mainFrame.NavigationService.Navigate(new PatientRegistration());
         }
 
         private void ShowPatients_Click(object sender, RoutedEventArgs e)
         {
-            DEBUGWINDOW dEBUGWINDOW = new DEBUGWINDOW();
-            dEBUGWINDOW.ShowDialog();
+            /*DEBUGWINDOW dEBUGWINDOW = new DEBUGWINDOW();
+            dEBUGWINDOW.ShowDialog();*/
+            _mainFrame.NavigationService.Navigate(new DataPage());
+        }
+
+        private void ShowPAGE_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

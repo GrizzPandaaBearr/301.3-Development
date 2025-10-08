@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _301._3_Development.Windows
+namespace _301._3_Development.Pages
 {
     /// <summary>
-    /// Interaction logic for PatientRegistration.xaml
+    /// Interaction logic for StartPage.xaml
     /// </summary>
-    public partial class PatientRegistration : Window
+    public partial class StartPage : Page
     {
-        public PatientRegistration()
+        public StartPage()
         {
             InitializeComponent();
         }
