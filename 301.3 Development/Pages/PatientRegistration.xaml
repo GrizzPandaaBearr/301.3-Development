@@ -60,10 +60,12 @@
                 <TextBlock Text="BithdayDay" x:Name="BirthDateBox" Grid.Row="5" Grid.Column="1" Margin="5,2"/>
                 <Button x:Name="PickAppointmentBtn" Content="Select" Margin="5,2"/>
             </StackPanel>
-            <TextBox x:Name="GenderBox" Grid.Row="6" Grid.Column="1" Margin="5,2"/>
+            <TextBox  x:Name="GenderBox" Grid.Row="6" Grid.Column="1" Margin="5,2"/>
+            
         </Grid>
+        <TextBlock Text="Message Placeholder" x:Name="messagebox" Grid.Column="1" Grid.Row="7"/>
 
         <Button Grid.Row="2" Content="Next" Width="70" Height="30" 
-        HorizontalAlignment="Right" Margin="0,212,0,18"/>
+        HorizontalAlignment="Right" Margin="0,212,0,18" x:Name="SendRegistrationForm_btn" Click="SendRegistrationForm_btn_Click"/>
     </Grid>
 </Page>

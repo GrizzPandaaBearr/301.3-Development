@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Brushes = System.Windows.Media.Brushes;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace _301._3_Development.Pages
 {
@@ -23,6 +25,36 @@ namespace _301._3_Development.Pages
         public PatientRegistration()
         {
             InitializeComponent();
+        }
+
+        private void SendRegistrationForm_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckFormRequest())
+            {
+                messagebox.Text = "IT IS WORKING";
+            }
+        }
+        private bool CheckFormRequest()
+        {
+            bool isValid = true;
+
+            List<TextBox> textBoxes = new List<TextBox>() { NameBox, PhoneBox, PassportBox, BirthPlaceBox, GenderBox};
+
+            string msg = "msg: ";
+
+            foreach (TextBox textBox in textBoxes)
+            {
+                if(textBox.Text == "")
+                {
+                    isValid = false;
+                    textBox.BorderBrush = Brushes.Red;
+                    msg += textBox.Name + " ";
+                }
+            }
+
+            if (!isValid) { messagebox.Text = msg; }
+
+            return isValid;
         }
     }
 }
