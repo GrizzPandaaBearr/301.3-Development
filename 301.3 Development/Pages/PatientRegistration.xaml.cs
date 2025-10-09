@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Brushes = System.Windows.Media.Brushes;
+using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
+
+using _301._3_Development.Scripts;
+using _301._3_Development.Windows;
 
 namespace _301._3_Development.Pages
 {
@@ -56,6 +61,15 @@ namespace _301._3_Development.Pages
             if (!isValid) { messagebox.Text = msg; }
 
             return isValid;
+        }
+
+        private void PickDateBtn(object sender, RoutedEventArgs e)
+        {
+            Button btn = e.Source as Button;
+
+            Debug.WriteLine(btn.Name);
+
+            
         }
     }
 }
