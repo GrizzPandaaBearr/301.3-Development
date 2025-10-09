@@ -29,16 +29,17 @@ namespace _301._3_Development.Pages
 
         private void SendRegistrationForm_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckFormRequest())
+            List<TextBox> textBoxes = new List<TextBox>() { NameBox, PhoneBox, PassportBox, BirthPlaceBox, GenderBox};
+            if (CheckFormRequest(textBoxes))
             {
                 messagebox.Text = "IT IS WORKING";
             }
         }
-        private bool CheckFormRequest()
+        private bool CheckFormRequest(List<TextBox> textBoxes)
         {
             bool isValid = true;
 
-            List<TextBox> textBoxes = new List<TextBox>() { NameBox, PhoneBox, PassportBox, BirthPlaceBox, GenderBox};
+            
 
             string msg = "msg: ";
 
