@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +16,20 @@ using System.Windows.Shapes;
 namespace _301._3_Development.Windows
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for CalendarSelect.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class CalendarSelect : Window
     {
-        public Window1()
+        public DateTime _DateTime { get; set; }
+        public CalendarSelect()
         {
             InitializeComponent();
+        }
+
+
+        private void CalendarSelector_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) /// this function is redundant as Selected date gets passed through using Dialogue box (see PatientRegistration.xaml.cs)
+        {
+            Debug.WriteLine(CalendarSelector.SelectedDate);
         }
     }
 }

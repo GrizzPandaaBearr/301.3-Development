@@ -27,22 +27,65 @@ namespace _301._3_Development.Pages
     /// </summary>
     public partial class PatientRegistration : Page
     {
+        string _Name;
+        string _Phone;
+        string _Passport;
+        string _BirthPlace;
+        string _Gender;
+        DateTime _BirthDate;
+        DateTime _AppointmentDate;
         public PatientRegistration()
         {
             InitializeComponent();
         }
 
+        private void NewUserRequest()
+        {
+            DataHandler dataHandler = new DataHandler();
+            Patient patient = new Patient();
+
+            patient.Name_First = _Name.Split()[0];
+            patient.Phone = _Phone;
+            patient.Birth_Place = _BirthPlace;
+            patient.Appointment_Date = _AppointmentDate.ToString();
+            patient.Sex = _Gender[0]; // this is horrid
+            patient.Name_Last = _Name.Split()[1];
+            patient.Birth_Date = _BirthDate.ToString();
+
+            bool requestResult = dataHandler.NewPatient(patient);
+
+            Debug.WriteLine("DID IT WORK????",requestResult);
+        }
+
+        private void GetSetForm()
+        {
+            _Name = NameBox.Text;
+            _Phone= PhoneBox.Text;
+            _Passport= PassportBox.Text;
+            _BirthPlace= BirthPlaceBox.Text;
+            _Gender = GenderBox.Text;
+        }
+
         private void SendRegistrationForm_btn_Click(object sender, RoutedEventArgs e)
         {
-            List<TextBox> textBoxes = new List<TextBox>() { NameBox, PhoneBox, PassportBox, BirthPlaceBox, GenderBox};
-            if (CheckFormRequest(textBoxes))
+
+            
+            if (!CheckFormRequest())
             {
-                messagebox.Text = "IT IS WORKING";
+                return;
+
             }
+            GetSetForm();
+            NewUserRequest();
         }
-        private bool CheckFormRequest(List<TextBox> textBoxes)
+        private bool CheckFormRequest()
         {
             bool isValid = true;
+
+            
+
+
+            List<TextBox> textBoxes = new List<TextBox>() { NameBox, PhoneBox, PassportBox, BirthPlaceBox, GenderBox};
 
             
 
@@ -69,7 +112,23 @@ namespace _301._3_Development.Pages
 
             Debug.WriteLine(btn.Name);
 
-            
+            CalendarSelect calendarSelect = new CalendarSelect();
+            calendarSelect.ShowDialog();
+
+            Debug.WriteLine(calendarSelect.CalendarSelector.SelectedDate.ToString());
+
+        }
+        private void RoutePickedDate(string btn, DateTime date)
+        {
+            switch(btn)
+            {
+                case "PickBirthdayBtn":
+                    _BirthDate = date;
+                    break;
+                case "PickAppointmentBtn":
+                    _AppointmentDate = date;
+                    break;
+            }
         }
     }
 }

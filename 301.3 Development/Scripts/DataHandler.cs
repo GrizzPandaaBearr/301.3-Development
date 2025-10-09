@@ -30,7 +30,7 @@ namespace _301._3_Development.Scripts
                 SELECT * 
                 FROM Patient
                 """;
-            SQLCommand(queery);
+            GetPatientsFromSQL(queery);
 
         }
         public List<Patient> GetPatients()
@@ -40,7 +40,7 @@ namespace _301._3_Development.Scripts
                 FROM Patient
                 """;
 
-            List<Patient> patients = SQLCommand(queery);
+            List<Patient> patients = GetPatientsFromSQL(queery);
 
             Debug.WriteLine("Printing results...");
 
@@ -52,7 +52,25 @@ namespace _301._3_Development.Scripts
             return patients;
 
         }
-        public List<Patient> SQLCommand(string queery)
+        private bool ExecuteSqlQueery(string queery)
+        {
+            bool result = true;
+
+            using (var connection = new SQLiteConnection(conString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = queery;
+                    command.ExecuteScalar();
+                    connection.Close();
+                }
+
+            }
+            
+            return result;
+        }
+        public List<Patient> GetPatientsFromSQL(string queery)
         {
             List<Patient> list = new List<Patient>();
             
@@ -115,6 +133,27 @@ namespace _301._3_Development.Scripts
                     p.Passport_Number = value; break;
             }
             return p;
+        }
+
+        public bool NewPatient(Patient patient)
+        {
+            bool result = true;
+
+            string queery = $"""
+                 INSERT INTO Patient(
+                Name_First, Name_Last, Birth_Place, Birth_Date, Sex, Phone, Appointment_Date, Passport_Number)
+                VALUES({patient.Name_First}, {patient.Name_Last}, {patient.Birth_Place}, {patient.Birth_Date}, {patient.Sex}, {patient.Phone}, {patient.Appointment_Date}, {patient.Passport_Number}); 
+                """;
+
+            try
+            {
+                bool sqlResult = ExecuteSqlQueery(queery);
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+            return result;
         }
         
     }
