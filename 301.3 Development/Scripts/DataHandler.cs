@@ -165,9 +165,22 @@ namespace _301._3_Development.Scripts
 
             if (!ExecuteSqlQueery(queery))
             {
-                Debug.WriteLine( "Failed to remove user" );
+                Debug.WriteLine("Failed to remove user");
             }
         }
-        
+
+
+        public void RemoveAllUsers() // currently only for patients
+        {
+            string queery = $"""
+                DELETE FROM Patient;
+                """;
+
+            if (!ExecuteSqlQueery(queery))
+            {
+                Debug.WriteLine("Failed to remove users");
+            }
+        }
+
     }
 }

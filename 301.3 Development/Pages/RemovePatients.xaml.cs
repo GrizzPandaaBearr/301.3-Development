@@ -29,6 +29,7 @@ namespace _301._3_Development.Pages
         private void DeleteAllUsersButton_Click(object sender, RoutedEventArgs e)
         {
             DataHandler handler = new DataHandler();
+            handler.RemoveAllUsers();
 
         }
 
