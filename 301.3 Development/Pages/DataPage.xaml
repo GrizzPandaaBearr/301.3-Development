@@ -12,7 +12,7 @@
 
         <StackPanel Background="AntiqueWhite">
             <Button Content="Test Data" Click="Button_Click" />
-            <DataGrid Name="PatientDataGrid"/>
+            <DataGrid  Name="PatientDataGrid"/>
         </StackPanel>
 
     </Grid>

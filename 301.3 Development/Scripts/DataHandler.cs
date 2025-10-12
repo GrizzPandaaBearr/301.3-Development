@@ -142,7 +142,15 @@ namespace _301._3_Development.Scripts
             string queery = $"""
                  INSERT INTO Patient(
                 Name_First, Name_Last, Birth_Place, Birth_Date, Sex, Phone, Appointment_Date, Passport_Number)
-                VALUES('{patient.Name_First}', '{patient.Name_Last}', '{patient.Birth_Place}', '{patient.Birth_Date}', '{patient.Sex}', '{patient.Phone}', '{patient.Appointment_Date}', '{patient.Passport_Number}'); 
+                VALUES(
+                '{patient.Name_First}', 
+                '{patient.Name_Last}', 
+                '{patient.Birth_Place}', 
+                '{patient.Birth_Date}', 
+                '{patient.Sex}', 
+                '{patient.Phone}', 
+                '{patient.Appointment_Date}', 
+                '{patient.Passport_Number}'); 
                 """;
 
             Debug.WriteLine( queery );
