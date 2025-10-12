@@ -29,7 +29,11 @@ namespace _301._3_Development.Windows
 
         private void CalendarSelector_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) /// this function is redundant as Selected date gets passed through using Dialogue box (see PatientRegistration.xaml.cs)
         {
-            Debug.WriteLine(CalendarSelector.SelectedDate);
+            if(CalendarSelector.SelectedDate != null)
+            {
+                _DateTime = (DateTime)CalendarSelector.SelectedDate;
+            }
+            Debug.WriteLine(_DateTime.ToShortDateString());
         }
     }
 }

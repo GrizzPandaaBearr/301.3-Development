@@ -45,5 +45,10 @@ namespace _301._3_Development
         {
             
         }
+
+        private void RemovePatients_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.NavigationService.Navigate(new RemovePatients());
+        }
     }
 }

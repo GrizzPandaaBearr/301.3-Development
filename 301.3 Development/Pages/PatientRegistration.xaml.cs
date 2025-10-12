@@ -45,12 +45,13 @@ namespace _301._3_Development.Pages
             Patient patient = new Patient();
 
             patient.Name_First = _Name.Split()[0];
+            patient.Name_Last = _Name.Split()[1];
             patient.Phone = _Phone;
             patient.Birth_Place = _BirthPlace;
-            patient.Appointment_Date = _AppointmentDate.ToString();
+            patient.Appointment_Date = _AppointmentDate.ToShortDateString();
             patient.Sex = _Gender[0]; // this is horrid
-            patient.Name_Last = _Name.Split()[1];
-            patient.Birth_Date = _BirthDate.ToString();
+            patient.Passport_Number = _Passport;
+            patient.Birth_Date = _BirthDate.ToShortDateString();
 
             bool requestResult = dataHandler.NewPatient(patient);
 
@@ -115,7 +116,17 @@ namespace _301._3_Development.Pages
             CalendarSelect calendarSelect = new CalendarSelect();
             calendarSelect.ShowDialog();
 
-            Debug.WriteLine(calendarSelect.CalendarSelector.SelectedDate.ToString());
+            DateTime? dT = calendarSelect.CalendarSelector.SelectedDate;
+
+            if(dT == null)
+            {
+                Debug.WriteLine("CalendarSelector == Null: " + dT);
+                return;
+            }
+
+            DateTime selectedDate = (DateTime)dT;
+            RoutePickedDate(btn.Name, selectedDate);
+
 
         }
         private void RoutePickedDate(string btn, DateTime date)
@@ -123,9 +134,11 @@ namespace _301._3_Development.Pages
             switch(btn)
             {
                 case "PickBirthdayBtn":
+                    Debug.WriteLine("Routed BirthDate:", btn);
                     _BirthDate = date;
                     break;
                 case "PickAppointmentBtn":
+                    Debug.WriteLine(" Routed AppointmentDate:", btn);
                     _AppointmentDate = date;
                     break;
             }

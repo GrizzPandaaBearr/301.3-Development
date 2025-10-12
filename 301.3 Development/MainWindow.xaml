@@ -22,6 +22,7 @@
         <StackPanel DockPanel.Dock="Left" Background="DimGray">
             <Button x:Name="NewPatientBtn" Content="New Patient" Click="NewPatientBtn_Click"></Button>
             <Button x:Name="ShowPatients" Content="Show Patients" Click="ShowPatients_Click"></Button>
+            <Button x:Name="RemovePatients" Content="Remove Patients" Click="RemovePatients_Click"></Button>
 
         </StackPanel>
         <Frame DockPanel.Dock="Right" x:Name="_mainFrame"/>

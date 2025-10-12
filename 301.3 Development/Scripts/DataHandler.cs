@@ -142,9 +142,10 @@ namespace _301._3_Development.Scripts
             string queery = $"""
                  INSERT INTO Patient(
                 Name_First, Name_Last, Birth_Place, Birth_Date, Sex, Phone, Appointment_Date, Passport_Number)
-                VALUES({patient.Name_First}, {patient.Name_Last}, {patient.Birth_Place}, {patient.Birth_Date}, {patient.Sex}, {patient.Phone}, {patient.Appointment_Date}, {patient.Passport_Number}); 
+                VALUES('{patient.Name_First}', '{patient.Name_Last}', '{patient.Birth_Place}', '{patient.Birth_Date}', '{patient.Sex}', '{patient.Phone}', '{patient.Appointment_Date}', '{patient.Passport_Number}'); 
                 """;
 
+            Debug.WriteLine( queery );
             try
             {
                 bool sqlResult = ExecuteSqlQueery(queery);
@@ -154,6 +155,18 @@ namespace _301._3_Development.Scripts
                 result = false;
             }
             return result;
+        }
+
+        public void RemoveUser(string firstname, string phonenumber) // currently only for patients
+        {
+            string queery = $"""
+                DELETE FROM Patient WHERE Name_First='{firstname}' AND Phone='{phonenumber}';
+                """;
+
+            if (!ExecuteSqlQueery(queery))
+            {
+                Debug.WriteLine( "Failed to remove user" );
+            }
         }
         
     }
