@@ -11,7 +11,7 @@ namespace _301._3_Development.Scripts.Repos
 {
     internal class UserRepo
     {
-        public void AddUser(User user)
+        public void AddUser(User user) //perhaps having the derived clases using this function as a base will be more aerodynamic
         {
             using var conn = DatabaseAccessLayer.ConnectToDatabase();
             using var cmd = new SQLiteCommand(conn);
@@ -30,6 +30,8 @@ namespace _301._3_Development.Scripts.Repos
             cmd.ExecuteNonQuery();
             long userid = conn.LastInsertRowId;
 
+
+            // at this point i think routing based on user.Role will be the way to go
             Debug.WriteLine(userid);
             Debug.WriteLine($"USER ID for {user.Role}: ", userid);
         }
