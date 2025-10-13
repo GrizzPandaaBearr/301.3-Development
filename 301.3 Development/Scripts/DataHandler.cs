@@ -15,7 +15,7 @@ namespace _301._3_Development.Scripts
 {
     class DataHandler
     {
-        private string conString = "Data Source=C:/Users/270331790/OneDrive - UP Education/Desktop/databaseSQLite/HospitalData.db";
+        private string conString = "Data Source=C:/Users/willi/source/repos/PasswordManager/301.3-Development/External_database/databaseSQLite/HospitalData.db";
         
         public void ConnectToDatabase()
         {
