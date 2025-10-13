@@ -33,5 +33,12 @@ namespace _301._3_Development.Scripts.Repos
             Debug.WriteLine(userid);
             Debug.WriteLine($"USER ID for {user.Role}: ", userid);
         }
+
+        public List<User> GetUsers()
+        {
+            List<User> users = new List<User>();
+
+            return users;
+        }
     }
 }

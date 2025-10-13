@@ -9,7 +9,7 @@ namespace _301._3_Development.RepoHandling
 {
     public static class DatabaseAccessLayer
     {
-        private static readonly string _connectionString = "Data Source=C:/Users/willi/source/repos/PasswordManager/301.3-Development/External_database/databaseSQLite/HospitalData.db";
+        private static readonly string _connectionString = "Data Source=C:/Users/270331790/OneDrive - UP Education/Documents/GitHub/301.3-Development/External_database/databaseSQLite/HospitalData.db";
     
         public static SQLiteConnection ConnectToDatabase() // connects to hospital database and returns open connection
         {
