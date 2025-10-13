@@ -19,6 +19,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 using _301._3_Development.Scripts;
 using _301._3_Development.Windows;
+using _301._3_Development.Scripts.Repos;
 
 namespace _301._3_Development.Pages
 {
@@ -41,21 +42,20 @@ namespace _301._3_Development.Pages
 
         private void NewUserRequest()
         {
-            DataHandler dataHandler = new DataHandler();
-            Patient patient = new Patient();
+            User user = new User();
+            Random random = new Random();
 
-            patient.Name_First = _Name.Split()[0];
-            patient.Name_Last = _Name.Split()[1];
-            patient.Phone = _Phone;
-            patient.Birth_Place = _BirthPlace;
-            patient.Appointment_Date = _AppointmentDate.ToShortDateString();
-            patient.Sex = _Gender[0]; // this is horrid
-            patient.Passport_Number = _Passport;
-            patient.Birth_Date = _BirthDate.ToShortDateString();
+            user.FirstName = _Name.Split()[0];
+            user.LastName = _Name.Split()[1];
+            user.Email = random.Next(1,1000).ToString();
+            user.Phone = _Phone;
+            user.Role = User.UserRole.Patient;
+            user.PasswordHash = "SecretPassword";
 
-            bool requestResult = dataHandler.NewPatient(patient);
+            UserRepo userRepo = new UserRepo();
+            userRepo.AddUser(user);
 
-            Debug.WriteLine("DID IT WORK????",requestResult);
+            Debug.WriteLine("");
         }
 
         private void GetSetForm()
@@ -71,11 +71,11 @@ namespace _301._3_Development.Pages
         {
 
             
-            if (!CheckFormRequest())
+            /*if (!CheckFormRequest())
             {
                 return;
 
-            }
+            }*/
             GetSetForm();
             NewUserRequest();
         }

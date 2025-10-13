@@ -101,7 +101,7 @@ namespace _301._3_Development.Scripts
 
                         Debug.Write($"[ {valid} ]");
 
-                        patient = ParceToPatient(patient, valid, i);
+                        //patient = ParceToPatient(patient, valid, i);
 
                     }
 
@@ -111,7 +111,7 @@ namespace _301._3_Development.Scripts
 
             return list;
         }
-        public Patient ParceToPatient(Patient p, string value, int it)
+        /*public Patient ParceToPatient(Patient p, string value, int it)
         {
             switch (it)
             {
@@ -133,9 +133,9 @@ namespace _301._3_Development.Scripts
                     p.Passport_Number = value; break;
             }
             return p;
-        }
+        }*/
 
-        public bool NewPatient(Patient patient)
+        /*public bool NewPatient(Patient patient)
         {
             bool result = true;
 
@@ -164,7 +164,7 @@ namespace _301._3_Development.Scripts
             }
             return result;
         }
-
+*/
         public void RemoveUser(string firstname, string phonenumber) // currently only for patients
         {
             string queery = $"""

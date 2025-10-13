@@ -47,20 +47,20 @@
             <TextBlock Text="Date Of Birth" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
             <TextBlock Text="Sex" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
 
-            <TextBox x:Name="NameBox" Grid.Row="0" Grid.Column="1" Margin="5,2"/>
-            <TextBox x:Name="PhoneBox" Grid.Row="1" Grid.Column="1" Margin="5,2"/>
-            <TextBox x:Name="PassportBox" Grid.Row="2" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="NameBox" Grid.Row="0" Grid.Column="1" Margin="5,2" Text="William Moller"/>
+            <TextBox x:Name="PhoneBox" Grid.Row="1" Grid.Column="1" Margin="5,2" Text="0732306558"/>
+            <TextBox x:Name="PassportBox" Grid.Row="2" Grid.Column="1" Margin="5,2" Text="A239485769"/>
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
                 <TextBlock Text="AppointmentDay" x:Name="AppointmentBox" Grid.Row="3" Grid.Column="1" Margin="5,2"/>
                 <Button x:Name="PickAppointmentBtn" Content="Select" Margin="5,2" Click="PickDateBtn"/>
             </StackPanel>
 
-            <TextBox x:Name="BirthPlaceBox" Grid.Row="4" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="BirthPlaceBox" Grid.Row="4" Grid.Column="1" Margin="5,2" Text="Sweden"/>
             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
                 <TextBlock Text="BithdayDay" x:Name="BirthDateBox" Grid.Row="5" Grid.Column="1" Margin="5,2"/>
                 <Button x:Name="PickBirthdayBtn" Content="Select" Margin="5,2" Click="PickDateBtn"/>
             </StackPanel>
-            <TextBox  x:Name="GenderBox" Grid.Row="6" Grid.Column="1" Margin="5,2"/>
+            <TextBox  x:Name="GenderBox" Grid.Row="6" Grid.Column="1" Margin="5,2" Text="M"/>
             
         </Grid>
         <TextBlock Text="Message Placeholder" x:Name="messagebox" Grid.Column="1" Grid.Row="7"/>
