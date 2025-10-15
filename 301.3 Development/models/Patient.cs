@@ -1,6 +1,12 @@
-﻿namespace _301._3_Development.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _301._3_Development.models
 {
-    public class Patient
+    internal class Patient
     {
         public required string Name { get; set; }
         public required string ContactNo { get; set; }
@@ -27,6 +33,5 @@
         public bool MedicalCheckUp { get; set; }
         public required string Doctor { get; set; }
         public required string Remark { get; set; }
-
     }
 }
