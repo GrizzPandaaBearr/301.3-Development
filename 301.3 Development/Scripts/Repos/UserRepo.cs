@@ -11,11 +11,19 @@ namespace _301._3_Development.Scripts.Repos
 {
     internal class UserRepo
     {
-        public void AddUser(User user) //perhaps having the derived clases using this function as a base will be more aerodynamic
+        protected User? user;
+        protected int userid;
+        protected SQLiteTransaction transaction;
+        public SQLiteCommand AddUser() //perhaps having the derived clases using this function as a base will be more aerodynamic
         {
-            using var conn = DatabaseAccessLayer.ConnectToDatabase();
-            using var cmd = new SQLiteCommand(conn);
+            SQLiteConnection conn = DatabaseAccessLayer.ConnectToDatabase();
+            SQLiteCommand cmd = new SQLiteCommand(conn);
 
+            transaction = conn.BeginTransaction();
+
+            cmd.Transaction = transaction;
+            cmd.Connection = conn;
+            
             cmd.CommandText = @"INSERT INTO Users (Email, PasswordHash, Role, Name_First, Name_Last, Phone)
                             VALUES (@Email, @PasswordHash, @Role, @First, @Last, @Phone)";
             cmd.Parameters.AddWithValue("@Email", user.Email);
@@ -25,15 +33,20 @@ namespace _301._3_Development.Scripts.Repos
             cmd.Parameters.AddWithValue("@Last", user.LastName);
             cmd.Parameters.AddWithValue("@Phone", user.Phone);
 
+            cmd.ExecuteNonQuery();
+
+
+
             Debug.WriteLine(user.Role);
 
-            cmd.ExecuteNonQuery();
-            long userid = conn.LastInsertRowId;
+            
+            userid = (int)conn.LastInsertRowId;
 
 
             // at this point i think routing based on user.Role will be the way to go
             Debug.WriteLine(userid);
             Debug.WriteLine($"USER ID for {user.Role}: ", userid);
+            return cmd;
         }
 
         public List<User> GetUsers()
@@ -42,5 +55,7 @@ namespace _301._3_Development.Scripts.Repos
 
             return users;
         }
+
+        
     }
 }

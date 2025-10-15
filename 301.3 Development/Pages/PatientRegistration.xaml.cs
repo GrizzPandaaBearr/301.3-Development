@@ -19,6 +19,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using _301._3_Development.Windows;
 using _301._3_Development.Scripts.Repos;
 using _301._3_Development.Scripts;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace _301._3_Development.Pages
 {
@@ -41,20 +42,41 @@ namespace _301._3_Development.Pages
 
         private void NewUserRequest()
         {
-            User user = new User();
+
+            Patient patient = SetPatient();
+
+            PatientRepo repo = new PatientRepo();
+            if (repo.AddPatient(patient))
+            {
+                System.Windows.MessageBox.Show("Successfully added Patient to database");
+                return;
+            }
+            
+            /*UserRepo userRepo = new UserRepo();
+            userRepo.AddUser(user);*/
+
+
+
+            Debug.WriteLine("Failed to update database");
+        }
+        private Patient SetPatient()
+        {
+            Patient patient = new Patient();
+            patient.Birth_Place = _BirthPlace;
+            patient.Birth_Date = _BirthDate.ToShortDateString();
+            patient.Sex = _Gender;
+            patient.DoctorID = 1; //default !!!!!
+            patient.Medical_History = "Null";
+            
             Random random = new Random();
+            patient.FirstName = _Name.Split()[0];
+            patient.LastName = _Name.Split()[1];
+            patient.Email = random.Next(1, 1000).ToString();
+            patient.Phone = _Phone;
+            patient.Role = Scripts.User.UserRole.Patient;
+            patient.PasswordHash = "SecretPassword";
 
-            user.FirstName = _Name.Split()[0];
-            user.LastName = _Name.Split()[1];
-            user.Email = random.Next(1,1000).ToString();
-            user.Phone = _Phone;
-            user.Role = User.UserRole.Patient;
-            user.PasswordHash = "SecretPassword";
-
-            UserRepo userRepo = new UserRepo();
-            userRepo.AddUser(user);
-
-            Debug.WriteLine("");
+            return patient;
         }
 
         private void GetSetForm()
