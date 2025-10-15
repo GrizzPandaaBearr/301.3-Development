@@ -1,0 +1,131 @@
+﻿<Page x:Class="_301._3_Development.userlogs"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_301._3_Development"
+        mc:Ignorable="d"
+  d:DesignHeight="600" d:DesignWidth="500"
+  Background="White"
+  Title="userlogs">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="80,0,80,0">
+            <Grid Width="70" Height="70">
+                <Image Source="/Assets/AucklandHospital.jpg" />
+            </Grid>
+
+            <TextBlock Text="Auckland Hospital"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0"/>
+        </StackPanel>
+
+        <Rectangle Grid.Row="0"
+                   Height="2"
+                   Fill="Black"
+                   VerticalAlignment="Bottom"
+                   Margin="0,80,0,0"/>
+
+        <StackPanel Grid.Row="1" Margin="10,20,10,20">
+            <Grid Height="31">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Users’ Logs"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           Margin="10,0,40,0"/>
+
+                <Border
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Height="28"
+                        VerticalAlignment="Center"
+                        Padding="5,0,5,0"
+                        Background="White" Margin="225,0,0,0">
+                    <DockPanel>
+                        <Image Source="/Assets/search.png" Height="22" Width="22"
+                                   Margin="0,0,0,0"/>
+
+                        <TextBox x:Name="SearchBox"
+                                 BorderThickness="0"
+                                 FontSize="13"
+                                 Foreground="Gray"
+                                 Text="Search by name"
+                                 VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Border>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="#F3F3F3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="User" Grid.Column="0" Margin="10,5" FontWeight="Bold"/>
+                    <TextBlock Text="Date" Grid.Column="1" Margin="10,5" FontWeight="Bold"/>
+                    <TextBlock Text="Time" Grid.Column="2" Margin="10,5" FontWeight="Bold"/>
+                    <TextBlock Text="Action" Grid.Column="3" Margin="10,5" FontWeight="Bold"/>
+                    <TextBlock Text="Last Edited" Grid.Column="4" Margin="10,5" FontWeight="Bold"/>
+                </Grid>
+
+                <DataGrid x:Name="LogsDataGrid"
+                          Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="False"
+                          HeadersVisibility="None"
+                          AlternatingRowBackground="#F5F5F5"
+                          Background="White"
+                          BorderBrush="Transparent"
+                          RowHeight="35"
+                          FontSize="14"
+                          Margin="0,0,0,0"
+                          IsReadOnly="True">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="User" Binding="{Binding User}" Width="2*"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="1.2*"/>
+                        <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="1.2*"/>
+                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" Width="2*"/>
+                        <DataGridTextColumn Header="Last Edited" Binding="{Binding LastEdited}" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+        </StackPanel>
+        <Button x:Name="FinishButton" Content="Finish"
+            Grid.Row="2"
+            Width="120"
+            Height="50"
+            FontSize="22"
+            FontWeight="Bold"
+            Background="#E6F7FF"
+            BorderBrush="Gray"
+            HorizontalAlignment="Right"
+            Margin="0,10,20,10" 
+            Click="FinishButton_Click"/>
+    </Grid>
+</Page>
