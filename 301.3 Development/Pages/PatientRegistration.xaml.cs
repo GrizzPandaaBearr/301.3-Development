@@ -16,10 +16,9 @@ using System.Windows.Shapes;
 using Brushes = System.Windows.Media.Brushes;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
-
-using _301._3_Development.Scripts;
 using _301._3_Development.Windows;
 using _301._3_Development.Scripts.Repos;
+using _301._3_Development.Scripts;
 
 namespace _301._3_Development.Pages
 {

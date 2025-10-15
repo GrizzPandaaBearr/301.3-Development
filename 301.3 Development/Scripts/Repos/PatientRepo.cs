@@ -12,28 +12,42 @@ namespace _301._3_Development.Scripts.Repos
 {
     class PatientRepo : UserRepo // NOT YET TESTEEEEEEEEEEEED
     {
-        public void AddPatient(Patient patient)
+        public bool AddPatient(Patient patient, User user)
         {
-            using var conn = DatabaseAccessLayer.ConnectToDatabase();
-            using var cmd = new SQLiteCommand(conn);
+            bool patientAdded = false;
 
-            cmd.CommandText = @"INSERT INTO Patients (Birth_Place, Birth_Date, Sex, DoctorID, Medical_History)
-                            VALUES (@Email, @PasswordHash, @Role, @First, @Last, @Phone)";
-            cmd.Parameters.AddWithValue("@Birth_Place", patient.Birth_Place);
-            cmd.Parameters.AddWithValue("@Birth_Date", patient.Birth_Date);
-            cmd.Parameters.AddWithValue("@Sex", patient.Sex);
-            cmd.Parameters.AddWithValue("@DoctorID", patient.DoctorID);
-            cmd.Parameters.AddWithValue("@Medical_History", patient.DoctorID);
+            SQLiteCommand cmd = AddUser(user);
+            SQLiteConnection conn = cmd.Connection;
+            
+            long userid = conn.LastInsertRowId; // get this
 
-            //Debug.WriteLine(user.Role);
+            try
+            {
+                cmd.CommandText = @"INSERT INTO Patients (PatientID, Birth_Place, Birth_Date, Sex, DoctorID, Medical_History)
+                            VALUES (@PatientID, @Birth_Place, @Birth_Date, @Sex, @DoctorID, @Medical_History)";
+                cmd.Parameters.AddWithValue("@Birth_Place", userid); // put here
+                cmd.Parameters.AddWithValue("@Birth_Place", patient.Birth_Place);
+                cmd.Parameters.AddWithValue("@Birth_Date", patient.Birth_Date);
+                cmd.Parameters.AddWithValue("@Sex", patient.Sex);
+                cmd.Parameters.AddWithValue("@DoctorID", patient.DoctorID);
+                cmd.Parameters.AddWithValue("@Medical_History", patient.DoctorID);
 
-            cmd.ExecuteNonQuery();
-            long userid = conn.LastInsertRowId;
+                //Debug.WriteLine(user.Role);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            
+            
 
 
             // at this point i think routing based on user.Role will be the way to go
             Debug.WriteLine(userid);
             //Debug.WriteLine($"USER ID for {user.Role}: ", userid);
+            return true;
         }
     }
 }
