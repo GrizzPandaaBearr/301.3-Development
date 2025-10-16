@@ -59,10 +59,6 @@ namespace _301._3_Development
 
             LogsDataGrid.ItemsSource = filteredLogs;
         }
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new adminscreen());
-        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -71,6 +67,13 @@ namespace _301._3_Development
 
             LogsDataGrid.ItemsSource = users;
         }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new adminscreen());
+        }
+
+       
     }
     public class UserLog
     {
