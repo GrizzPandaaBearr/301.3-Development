@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.models;
+using _301._3_Development.Security;
+using _301._3_Development.Services;
 
 namespace _301._3_Development
 {
@@ -59,6 +62,14 @@ namespace _301._3_Development
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new adminscreen());
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var enc = new EncryptionService(App.AppEncryptionKey);
+            var users = EncryptedStorage.LoadUsersEncrypted<UserDTO>(enc);
+
+            LogsDataGrid.ItemsSource = users;
         }
     }
     public class UserLog

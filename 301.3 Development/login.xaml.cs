@@ -12,14 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.Security;
 
 namespace _301._3_Development
 {
     public partial class login : Page
     {
+        private readonly EncryptionService _enc;
+
         public login()
         {
             InitializeComponent();
+            _enc = new EncryptionService(App.AppEncryptionKey);
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -27,10 +31,15 @@ namespace _301._3_Development
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Password.Trim();
 
-            if (username == App.RegisteredUsername && password == App.RegisteredPassword)
+            if (username == App.RegisteredUsername && App.RegisteredPasswordEncrypted != null)
             {
-                MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationService.Navigate(new mainscreen());
+                var decrypted = _enc.DecryptString(App.RegisteredPasswordEncrypted);
+                if (decrypted == password)
+                {
+                    MessageBox.Show("Login successful!");
+                    NavigationService.Navigate(new mainscreen());
+                    return;
+                }
             }
             if (username == App.AdminUsername && password == App.AdminPassword)
             {
