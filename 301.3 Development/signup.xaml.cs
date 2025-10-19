@@ -1,66 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using _301._3_Development.Security;
 using _301._3_Development.Services;
-using _301._3_Development.models;
-using System.Collections.Generic;
 
 namespace _301._3_Development
 {
     public partial class signup : Page
     {
-        private readonly EncryptionService _enc;
+        private readonly UserStore userStore;
 
         public signup()
         {
             InitializeComponent();
-            _enc = new EncryptionService(App.AppEncryptionKey);
+            string secret = Environment.GetEnvironmentVariable("FORM_MASTER_PASSPHRASE");
+            if (string.IsNullOrEmpty(secret))
+            {
+                secret = "dev-default-passphrase-change-me";
+            }
+
+            var dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyApp");
+            Directory.CreateDirectory(dataPath);
+            var usersFile = Path.Combine(dataPath, "users.json");
+
+            userStore = new UserStore(usersFile, secret);
         }
 
         private void BtnSignup_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text.Trim();
-            string password = txtPassword.Password.Trim();
+            string password = isPasswordVisible ? txtPasswordVisible.Text : txtPassword.Password;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Please enter Username and Password.", "Try Again", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter username and password.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var enc = new EncryptionService(App.AppEncryptionKey);
-            var users = EncryptedStorage.LoadUsersEncrypted<UserDTO>(enc);
-            string encryptedPassword = _enc.EncryptString(password);
-
-            users.Add(new UserDTO
+            bool ok = userStore.AddUser(username, password, fullName: null);
+            if (!ok)
             {
-                Username = username,
-                EncryptedPassword = enc.EncryptString(password)
-            });
+                MessageBox.Show("Username already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            App.RegisteredUsername = username;
-            App.RegisteredPasswordEncrypted = encryptedPassword;
-
-            EncryptedStorage.SaveUsersEncrypted(users, enc);
-
-            MessageBox.Show("Account created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void BtnGoToLogin_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new login());
+            MessageBox.Show("Account created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            NavigationService?.Navigate(new login());
         }
     }
 }

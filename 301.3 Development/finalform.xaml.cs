@@ -1,6 +1,4 @@
-﻿using _301._3_Development.Models;
-using _301._3_Development.Security;
-using _301._3_Development.Services;
+﻿using _301._3_Development.Services;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -42,10 +40,6 @@ namespace _301._3_Development
         public finalform()
         {
             InitializeComponent();
-
-            var enc = new EncryptionService(App.AppEncryptionKey);
-            PatientStorage.SavePatient(patientFormData, enc);
-            var data = PatientStorage.LoadPatient<PatientFormData>(enc);
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)

@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using _301._3_Development.Security;
 using _301._3_Development.Services;
+using _301._3_Development.models;
+
 
 namespace _301._3_Development
 {
@@ -34,10 +35,6 @@ namespace _301._3_Development
             };
 
             PatientList.ItemsSource = allPatients;
-
-            var enc = new EncryptionService(App.AppEncryptionKey);
-            PatientStorage.SavePatient(patientFormData, enc);
-            var data = PatientStorage.LoadPatient<PatientFormData>(enc);
 
         }
 
