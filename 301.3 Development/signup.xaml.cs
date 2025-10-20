@@ -1,50 +1,48 @@
-﻿using System;
-using System.IO;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using _301._3_Development.models;
+using _301._3_Development.Security;
 using _301._3_Development.Services;
 
 namespace _301._3_Development
 {
     public partial class signup : Page
     {
-        private readonly UserStore userStore;
+        private readonly AesGcmEncryptionService _encService;
 
         public signup()
         {
             InitializeComponent();
-            string secret = Environment.GetEnvironmentVariable("FORM_MASTER_PASSPHRASE");
-            if (string.IsNullOrEmpty(secret))
-            {
-                secret = "dev-default-passphrase-change-me";
-            }
-
-            var dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyApp");
-            Directory.CreateDirectory(dataPath);
-            var usersFile = Path.Combine(dataPath, "users.json");
-
-            userStore = new UserStore(usersFile, secret);
+            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
 
         private void BtnSignup_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string password = isPasswordVisible ? txtPasswordVisible.Text : txtPassword.Password;
+            string username = txtUsername.Text?.Trim();
+            string password = txtPassword.Password;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Please enter username and password.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please provide username and password.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            bool ok = userStore.AddUser(username, password, fullName: null);
-            if (!ok)
+            var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
+
+            if (users.Any(u => u.Username == username))
             {
-                MessageBox.Show("Username already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Username already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            MessageBox.Show("Account created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            var encryptedPassword = _encService.EncryptString(password);
+
+            var user = new UserDTO {Username = username, EncryptedPassword = encryptedPassword };
+            users.Add(user);
+            EncryptedStorage.SaveEncrypted(users, _encService);
+
+            MessageBox.Show("Account created.", "Success", MessageBoxButton.OK);
             NavigationService?.Navigate(new login());
         }
     }

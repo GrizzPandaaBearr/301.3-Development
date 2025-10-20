@@ -1,78 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using _301._3_Development.models;
+using _301._3_Development.Security;
 using _301._3_Development.Services;
 
 namespace _301._3_Development
 {
     public partial class userlogs : Page
     {
-        private ObservableCollection<UserLog> allLogs;
+        private readonly AesGcmEncryptionService _encService;
 
         public userlogs()
         {
             InitializeComponent();
-            LoadUserLogs();
-
-            SearchBox.TextChanged += SearchBox_TextChanged;
-
-            FinishButton.Click += FinishButton_Click;
+            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
+            LoadLogs();
         }
-
-        private void LoadUserLogs()
+        private void LoadLogs()
         {
-            allLogs = new ObservableCollection<UserLog>
+            var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
+            var display = users.Select(u =>
             {
+                var pwd = "[decryption error]";
+                try { pwd = _encService.DecryptString(u.EncryptedPassword); }
+                catch { }
+                return new { FullName = u.FullName, Username = u.Username, DecryptedPassword = pwd };
+            }).ToList();
 
-            };
-
-            LogsDataGrid.ItemsSource = allLogs;
+            LogsDataGrid.ItemsSource = display;
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            string searchText = SearchBox.Text.ToLower();
-
-            if (string.IsNullOrWhiteSpace(searchText) || searchText == "search by name")
-            {
-                LogsDataGrid.ItemsSource = allLogs;
-                return;
-            }
-
-            var filteredLogs = allLogs
-                .Where(log => log.User.ToLower().Contains(searchText))
-                .ToList();
-
-            LogsDataGrid.ItemsSource = filteredLogs;
+            LoadLogs();
         }
-
-       
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new adminscreen());
-        }
-
-       
-    }
-    public class UserLog
-    {
-        public required string User { get; set; }
-        public required string Date { get; set; }
-        public required string Time { get; set; }
-        public required string Action { get; set; }
-        public required string LastEdited { get; set; }
     }
 }
