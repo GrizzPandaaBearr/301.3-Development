@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:_301._3_Development"
       mc:Ignorable="d" d:DesignWidth="350"
       Title="patientdataform"
-      Background="White" Height="340">
+      Background="White" Height="341">
 
     <Grid Margin="20,20,20,0">
         <Grid.RowDefinitions>
@@ -17,12 +17,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Registration Form" 
-                   FontSize="18" FontWeight="Bold" 
-                   HorizontalAlignment="Center" Margin="0,0,0,10"/>
+               FontSize="18" FontWeight="Bold" 
+               HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
-        <TextBlock Text="Patient’s Data" 
-                   Grid.Row="1" Foreground="Blue" 
-                   FontWeight="Bold" Margin="0,0,0,10"/>
+        <TextBlock Text="Patient’s Data (Base on Passport/ID Card)" 
+               Grid.Row="1" Foreground="Blue" 
+               FontWeight="Bold" Margin="0,0,0,10"/>
 
         <Grid Grid.Row="2" Margin="0,0,0,48">
             <Grid.ColumnDefinitions>
@@ -47,16 +47,17 @@
             <TextBlock Text="Date Of Birth" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
             <TextBlock Text="Sex" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="4" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="5" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtContactNo" Grid.Row="1" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtPassportNo" Grid.Row="2" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtAppointmentDate" Grid.Row="3" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtPlaceOfBirth" Grid.Row="4" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtDOB" Grid.Row="5" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtSex" Grid.Row="6" Grid.Column="1" Margin="5,2"/>
         </Grid>
 
         <Button Grid.Row="2" Content="Next" Width="70" Height="30" 
-                HorizontalAlignment="Right" Margin="0,212,0,18"/>
+            HorizontalAlignment="Right" Margin="0,196,5,13"
+            Click="Next_Click" Background="#E6F7FF"/>
     </Grid>
 </Page>

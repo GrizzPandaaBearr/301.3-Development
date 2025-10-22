@@ -21,12 +21,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Registration Form" 
-                   FontSize="18" FontWeight="Bold" 
-                   HorizontalAlignment="Center" Margin="0,0,0,10" Grid.Column="1"/>
+               FontSize="18" FontWeight="Bold" 
+               HorizontalAlignment="Center" Margin="0,0,0,10" Grid.Column="1"/>
 
         <TextBlock Text="Patient’s Emergency Contact" 
-                   Grid.Row="1" Foreground="Blue" 
-                   FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="2"/>
+               Grid.Row="1" Foreground="Blue" 
+               FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="2"/>
 
         <Grid Grid.Row="2" Margin="0,0,0,10" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -43,14 +43,17 @@
             <TextBlock Text="Contact No" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
             <TextBlock Text="Relationship" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="5,2"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtContactNo" Grid.Row="1" Grid.Column="1" Margin="5,2"/>
+            <TextBox x:Name="txtRelationship" Grid.Row="2" Grid.Column="1" Margin="5,2"/>
         </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="8,82,8,-8" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <Button Content="Previous" Width="80" Height="30" HorizontalAlignment="Left"/>
-            <Button Content="Next" Width="80" Height="30" Margin="110,0,0,0"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="8,82,8,-8" 
+                Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Button Content="Previous" Width="80" Height="30" HorizontalAlignment="Left"
+                Click="Previous_Click" Background="#E6F7FF"/>
+            <Button Content="Next" Width="80" Height="30" Margin="110,0,0,0"
+                Click="Next_Click" Background="#E6F7FF"/>
         </StackPanel>
     </Grid>
 </Page>

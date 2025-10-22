@@ -4,108 +4,112 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:_301._3_Development"
-      mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="800"
-      Title="finalform"
-      Background="White">
+        mc:Ignorable="d" d:DesignWidth="800"
+  Title="finalform"
+  Background="White" Height="591">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="20">
+    <Grid Margin="20,0,20,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="372*"/>
+            <ColumnDefinition Width="319*"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                <Ellipse Width="40" Height="40" Fill="LightGray" VerticalAlignment="Center"/>
-                <TextBlock Text="Timberland Medical Centre" 
-                           FontSize="18" FontWeight="Bold" 
-                           VerticalAlignment="Center" Margin="10,0,0,0"/>
-            </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="199,11,0,10" Grid.ColumnSpan="2" Grid.Column="1">
+            <Image Source="/Assets/AucklandHospital.jpg" Width="60" Height="60" VerticalAlignment="Center"/>
+            <TextBlock Text="Auckland Hospital" 
+                       FontSize="18" FontWeight="Bold" 
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+        </StackPanel>
 
-            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="PATIENT :" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
-                        <TextBlock Text="Patient's name" />
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Contact No"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Passport No"/>
-                        <TextBox Margin="0,0,0,5"/>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3" Grid.ColumnSpan="3">
+            <Grid Background="#E6F7FF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="PATIENT :" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
+                    <TextBlock Text="Patient's name"/>
+                    <TextBox x:Name="txtPatientName" Margin="0,0,0,5"/>
+                    <TextBlock Text="Contact No"/>
+                    <TextBox x:Name="txtContactNo" Margin="0,0,0,5"/>
+                    <TextBlock Text="Passport No"/>
+                    <TextBox x:Name="txtPassportNo" Margin="0,0,0,5"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                    <TextBlock Text="Appointment Date"/>
+                    <TextBox  x:Name="txtAppointmentDate" Margin="0,0,0,5"/>
+                    <TextBlock Text="Place of birth"/>
+                    <TextBox x:Name="txtPlaceOfBirth" Margin="0,0,0,5"/>
+                    <TextBlock Text="Date of birth"/>
+                    <TextBox x:Name="txtDateOfBirth" Margin="0,0,0,5"/>
+                    <TextBlock Text="Sex"/>
+                    <TextBox x:Name="txtSex" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3" Grid.ColumnSpan="3">
+            <Grid >
+                <StackPanel>
+                    <TextBlock Text="PATIENT’S EMERGENCY CONTACT:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
+                    <TextBlock Text="Name"/>
+                    <TextBox x:Name="txtEmergencyName" Margin="0,0,0,5"/>
+                    <TextBlock Text="Contact No"/>
+                    <TextBox x:Name="txtEmergencyContact" Margin="0,0,0,5"/>
+                    <TextBlock Text="Relationship"/>
+                    <TextBox x:Name="txtEmergencyRelation" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="0,5,78,5" CornerRadius="3" Grid.ColumnSpan="2">
+            <Grid Background="#E6F7FF">
+                <StackPanel>
+                    <TextBlock Text="PICK-UP NEEDED:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <CheckBox x:Name="chkPickupYes" Content="Yes" Margin="0,0,20,0"/>
+                        <CheckBox x:Name="chkPickupNo" Content="No"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Appointment Date"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Place of birth"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Date of birth"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Sex"/>
-                        <TextBox Margin="0,0,0,5"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
+                    <TextBlock Text="Come by"/>
+                    <TextBox x:Name="txtComeBy" Margin="0,0,0,5"/>
+                    <TextBlock Text="ETA"/>
+                    <TextBox x:Name="txtETA" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3">
-                <Grid Background="#E6F7FF">
-                    <StackPanel>
-                        <TextBlock Text="PATIENT’S EMERGENCY CONTACT:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
-                        <TextBlock Text="Name"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Contact No"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Relationship"/>
-                        <TextBox Margin="0,0,0,5"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="299,5,0,5" CornerRadius="3" Grid.ColumnSpan="2" Grid.Column="1">
+            <Grid Background="#E6F7FF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="INFORMATION:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
+                    <CheckBox x:Name="chkInpatient" Content="Inpatient"/>
+                    <CheckBox x:Name="chkOutpatient" Content="Outpatient"/>
+                    <CheckBox x:Name="chkMedicalCheckup" Content="Medical Check-Up"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                    <TextBlock Text="Doctor"/>
+                    <TextBox x:Name="txtDoctor" Margin="0,0,0,5"/>
+                    <TextBlock Text="Remark"/>
+                    <TextBox x:Name="txtRemark" Margin="0,0,0,5" Height="60"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-            <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3">
-                <Grid Background="White">
-                    <StackPanel>
-                        <TextBlock Text="PICK-UP NEEDED:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <CheckBox Content="Yes" Margin="0,0,20,0"/>
-                            <CheckBox Content="No"/>
-                        </StackPanel>
-                        <TextBlock Text="Come by"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="ETA"/>
-                        <TextBox Margin="0,0,0,5"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <Border Grid.Row="4" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" CornerRadius="3">
-                <Grid Background="#E6F7FF">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="INFORMATION:" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
-                        <CheckBox Content="Inpatient"/>
-                        <CheckBox Content="Outpatient"/>
-                        <CheckBox Content="Medical Check-Up"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Doctor"/>
-                        <TextBox Margin="0,0,0,5"/>
-                        <TextBlock Text="Remark"/>
-                        <TextBox Margin="0,0,0,5" Height="60"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-        </Grid>
-    </ScrollViewer>
+        <Button Content="Export to Image" Grid.Row="4" Width="126" HorizontalAlignment="Left" Margin="248,10,0,10"
+    Click="BtnExport_Click" Grid.Column="1" Grid.ColumnSpan="2" Background="#E6F7FF"/>
+    </Grid>
 </Page>
