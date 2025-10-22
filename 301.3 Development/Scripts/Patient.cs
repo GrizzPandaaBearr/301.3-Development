@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _301._3_Development.Scripts
 {
-    class Patient : User
+    public class Patient : User
     {
         public int PatientID { get; set; }
         public string Birth_Place { get; set; }

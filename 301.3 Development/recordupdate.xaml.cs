@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using _301._3_Development.Services;
 using _301._3_Development.models;
-
+using _301._3_Development.Scripts;
 
 namespace _301._3_Development
 {
@@ -43,7 +43,7 @@ namespace _301._3_Development
             string query = SearchBox.Text.ToLower();
 
             var filtered = allPatients
-                .Where(p => p.Name.ToLower().Contains(query))
+                .Where(p => p.FirstName.ToLower().Contains(query))
                 .ToList();
 
             PatientList.ItemsSource = filtered;
@@ -53,7 +53,7 @@ namespace _301._3_Development
         {
             if (sender is Button button && button.Content is string patientName)
             {
-                var selected = allPatients.FirstOrDefault(p => p.Name == patientName);
+                var selected = allPatients.FirstOrDefault(p => p.FirstName == patientName);
 
                 if (selected != null)
                 {

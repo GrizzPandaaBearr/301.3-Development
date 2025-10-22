@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using _301._3_Development.Scripts;
 
 namespace _301._3_Development
 {
@@ -16,31 +17,31 @@ namespace _301._3_Development
         {
             InitializeComponent();
 
-            txtPatientName.Text = patient.Name;
-            txtContactNo.Text = patient.ContactNo;
-            txtPassportNo.Text = patient.PassportNo;
+            txtPatientName.Text = $" {patient.FirstName} {patient.LastName}";
+            txtContactNo.Text = patient.Phone;
+            txtPassportNo.Text = "placeholder"; // sort it out later by god
 
-            txtEmergencyName.Text = patient.EmergencyName;
-            txtEmergencyContact.Text = patient.EmergencyContact;
-            txtEmergencyRelation.Text = patient.EmergencyRelation;
+            txtEmergencyName.Text = "patient.EmergencyName";
+            txtEmergencyContact.Text = "patient.EmergencyContact";
+            txtEmergencyRelation.Text = "patient.EmergencyRelation";
 
-            chkPickupYes.IsChecked = patient.PickupYes;
-            chkPickupNo.IsChecked = patient.PickupNo;
-            txtComeBy.Text = patient.ComeBy;
-            txtETA.Text = patient.ETA;
+            chkPickupYes.IsChecked = false;
+            chkPickupNo.IsChecked = false;
+            txtComeBy.Text = "patient.ComeBy";
+            txtETA.Text = "patient.ETA";
 
-            chkInpatient.IsChecked = patient.Inpatient;
-            chkOutpatient.IsChecked = patient.Outpatient;
-            chkMedicalCheckup.IsChecked = patient.MedicalCheckUp;
+            chkInpatient.IsChecked = false;
+            chkOutpatient.IsChecked = false;
+            chkMedicalCheckup.IsChecked = false;
 
-            txtDoctor.Text = patient.Doctor;
-            txtRemark.Text = patient.Remark;
+            txtDoctor.Text = patient.DoctorID.ToString();
+            txtRemark.Text = patient.Medical_History;
         }
 
-        public finalform()
+        /*public finalform()
         {
             InitializeComponent();
-        }
+        }*/
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
@@ -61,19 +62,19 @@ namespace _301._3_Development
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileAccess.Read))
                     {
                         PngBitmapEncoder encoder = new PngBitmapEncoder();
                         encoder.Frames.Add(BitmapFrame.Create(rtb));
                         encoder.Save(fs);
                     }
 
-                    MessageBox.Show("Form exported successfully!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Form exported successfully!", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch
             {
-                MessageBox.Show("Error while exporting form.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error while exporting form.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

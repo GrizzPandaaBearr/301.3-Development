@@ -42,7 +42,7 @@ namespace _301._3_Development
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(contactNo))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error",
-                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

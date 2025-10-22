@@ -39,7 +39,7 @@
                 <Button Content="Add New Admins" Width="160" Height="40"
                     BorderBrush="Black" BorderThickness="1" Margin="20,10,0,10"
                     Grid.Row="0" Grid.Column="0" Background="#E6F7FF"
-                    Click="BtnAddAdmin_Click"/>
+                    Click="BtnAddNewAdmin_Click"/>
 
                 <Button Content="Update Records" Width="160" Height="40"
                     BorderBrush="Black" BorderThickness="1" Margin="55,10,-43,10"

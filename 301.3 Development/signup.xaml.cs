@@ -24,7 +24,7 @@ namespace _301._3_Development
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Please provide username and password.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please provide username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace _301._3_Development
 
             if (users.Any(u => u.Username == username))
             {
-                MessageBox.Show("Username already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Username already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -42,7 +42,7 @@ namespace _301._3_Development
             users.Add(user);
             EncryptedStorage.SaveEncrypted(users, _encService);
 
-            MessageBox.Show("Account created.", "Success", MessageBoxButton.OK);
+            MessageBox.Show("Account created.", "Success", MessageBoxButtons.OK);
             NavigationService?.Navigate(new login());
         }
     }

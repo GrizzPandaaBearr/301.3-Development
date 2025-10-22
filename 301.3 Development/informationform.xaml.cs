@@ -41,13 +41,13 @@ namespace _301._3_Development
             if (!isInpatient && !isOutpatient && !isCheckup)
             {
                 MessageBox.Show("Please select at least one type (Inpatient, Outpatient, or Medical Check-Up).",
-                                "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (string.IsNullOrWhiteSpace(doctor))
             {
                 MessageBox.Show("Please enter the Doctor’s name.",
-                                "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

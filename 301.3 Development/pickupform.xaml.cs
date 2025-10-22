@@ -52,13 +52,13 @@ namespace _301._3_Development
             if (pickupNeeded == null)
             {
                 MessageBox.Show("Please select whether pickup is needed (Yes or No).",
-                                "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (pickupNeeded == true && (string.IsNullOrWhiteSpace(comeBy) || string.IsNullOrWhiteSpace(eta)))
             {
                 MessageBox.Show("Please fill in 'Come by' and 'ETA' if pickup is needed.",
-                                "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace _301._3_Development
             };
 
             MessageBox.Show($"Pickup Needed: {pickup.PickupNeeded}\nCome by: {pickup.ComeBy}\nETA: {pickup.ETA}",
-                            "Pickup Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            "Pickup Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
     }

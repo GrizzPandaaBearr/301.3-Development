@@ -41,7 +41,7 @@ namespace _301._3_Development
                 string.IsNullOrWhiteSpace(patient.Sex))
             {
                 MessageBox.Show("All Informations are required! Please check again!", "Validation Error!",
-                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

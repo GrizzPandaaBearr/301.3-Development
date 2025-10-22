@@ -27,7 +27,7 @@ namespace _301._3_Development
             var user = users.FirstOrDefault(u => u.Username == username);
             if (user == null)
             {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -35,7 +35,7 @@ namespace _301._3_Development
                 var decrypted = _encService.DecryptString(user.EncryptedPassword);
                 if (decrypted == password)
                 {
-                    MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Login successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     NavigationService?.Navigate(new mainscreen());
                     return;
                 }
@@ -45,7 +45,7 @@ namespace _301._3_Development
                 
             }
 
-            MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

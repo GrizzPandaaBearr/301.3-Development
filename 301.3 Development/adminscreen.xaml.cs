@@ -15,24 +15,24 @@ namespace _301._3_Development
 
         }
 
-        private void BtnReadUserLogs_Click(object sender, RoutedEventArgs e)
+        private void BtnReadLogs_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (!File.Exists(logsFile))
                 {
-                    MessageBox.Show("No logs found.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("No logs found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error reading logs: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error reading logs: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void BtnExportToExcel_Click(object sender, RoutedEventArgs e)
+        private void BtnExportExcel_Click(object sender, RoutedEventArgs e)
         {
         }
 

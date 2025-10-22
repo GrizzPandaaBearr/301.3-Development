@@ -18,4 +18,22 @@
     <PackageReference Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="System.Windows.Controls.Button">
+      <Alias>Button</Alias>
+    </Using>
+    <Using Include="System.Windows.Controls.TextBox">
+      <Alias>TextBox</Alias>
+    </Using>
+    <Using Include="System.Windows.Forms.MessageBox">
+      <Alias>MessageBox</Alias>
+    </Using>
+    <Using Include="System.Windows.Forms.SaveFileDialog">
+      <Alias>SaveFileDialog</Alias>
+    </Using>
+    <Using Include="System.Windows.Media.Brushes">
+      <Alias>Brushes</Alias>
+    </Using>
+  </ItemGroup>
+
 </Project>
