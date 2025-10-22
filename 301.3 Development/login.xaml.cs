@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using _301._3_Development.models;
@@ -20,32 +19,28 @@ namespace _301._3_Development
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text.Trim();
+            string username = txtUsername.Text?.Trim();
             string password = txtPassword.Password;
 
             var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
             var user = users.FirstOrDefault(u => u.Username == username);
+
             if (user == null)
             {
                 MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            try
-            {
-                var decrypted = _encService.DecryptString(user.EncryptedPassword);
-                if (decrypted == password)
-                {
-                    MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NavigationService?.Navigate(new mainscreen());
-                    return;
-                }
-            }
-            catch
-            {
-                
-            }
 
-            MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            bool valid = PasswordHasher.VerifyPassword(password, user.PasswordHash);
+            if (valid)
+            {
+                MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService?.Navigate(new mainscreen());
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

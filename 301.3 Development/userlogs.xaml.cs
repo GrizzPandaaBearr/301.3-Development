@@ -23,9 +23,9 @@ namespace _301._3_Development
             var display = users.Select(u =>
             {
                 var pwd = "[decryption error]";
-                try { pwd = _encService.DecryptString(u.EncryptedPassword); }
+                try { pwd = _encService.DecryptString(u.PasswordHash); }
                 catch { }
-                return new { FullName = u.FullName, Username = u.Username, DecryptedPassword = pwd };
+                return new {Username = u.Username, DecryptedPassword = pwd };
             }).ToList();
 
             LogsDataGrid.ItemsSource = display;
@@ -34,6 +34,11 @@ namespace _301._3_Development
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadLogs();
+        }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new adminscreen());
         }
     }
 }

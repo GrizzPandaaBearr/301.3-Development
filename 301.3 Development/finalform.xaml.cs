@@ -1,79 +1,64 @@
-﻿using _301._3_Development.Services;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
+using _301._3_Development.models;
+using _301._3_Development.Security;
+using _301._3_Development.Services;
 
 namespace _301._3_Development
 {
     public partial class finalform : Page
     {
-
-        public finalform(Patient patient)
-        {
-            InitializeComponent();
-
-            txtPatientName.Text = patient.Name;
-            txtContactNo.Text = patient.ContactNo;
-            txtPassportNo.Text = patient.PassportNo;
-
-            txtEmergencyName.Text = patient.EmergencyName;
-            txtEmergencyContact.Text = patient.EmergencyContact;
-            txtEmergencyRelation.Text = patient.EmergencyRelation;
-
-            chkPickupYes.IsChecked = patient.PickupYes;
-            chkPickupNo.IsChecked = patient.PickupNo;
-            txtComeBy.Text = patient.ComeBy;
-            txtETA.Text = patient.ETA;
-
-            chkInpatient.IsChecked = patient.Inpatient;
-            chkOutpatient.IsChecked = patient.Outpatient;
-            chkMedicalCheckup.IsChecked = patient.MedicalCheckUp;
-
-            txtDoctor.Text = patient.Doctor;
-            txtRemark.Text = patient.Remark;
-        }
+        private readonly AesGcmEncryptionService _encService;
 
         public finalform()
         {
             InitializeComponent();
+            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
+            Bitmap formImage = new Bitmap(this.Width, this.Height);
+
+
+
+            var patient = new
+            {
+                Name = txtPatientName.Text,
+                ContactNo = txtContactNo.Text,
+                PassportNo = txtPassportNo.Text,
+                AppointmentDate = txtAppointmentDate.Text,
+                PlaceOfBirth = txtPlaceOfBirth.Text,
+                DateOfBirth = txtDateOfBirth.Text,
+                Sex = txtSex.Text,
+
+                EmergencyName = txtEmergencyName.Text,
+                EmergencyContact = txtEmergencyContact.Text,
+                EmergencyRelation = txtEmergencyRelation.Text,
+
+                PickupYes = chkPickupYes,
+                PickupNo = chkPickupNo,
+
+                ComeBy = txtComeBy.Text,
+                ETA = txtETA.Text,
+
+                Inpatient = chkInpatient,
+                Outpatient = chkOutpatient,
+                MedicalCheckUp = chkMedicalCheckup,
+
+                Doctor = txtDoctor.Text,
+                Remark = txtRemark.Text
+            };
+
             try
             {
-                RenderTargetBitmap rtb = new RenderTargetBitmap(
-                    (int)this.ActualWidth,
-                    (int)this.ActualHeight,
-                    96d, 96d, PixelFormats.Pbgra32);
+                PatientStorage.SavePatientData(patient, _encService);
 
-                rtb.Render(this);
-
-                SaveFileDialog saveFileDialog = new SaveFileDialog
-                {
-                    Filter = "PNG Image|*.png",
-                    Title = "Save Registration Form"
-                };
-
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create))
-                    {
-                        PngBitmapEncoder encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(rtb));
-                        encoder.Save(fs);
-                    }
-
-                    MessageBox.Show("Form exported successfully!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
             }
             catch
             {
-                MessageBox.Show("Error while exporting form.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error saving patient data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -29,20 +29,28 @@ namespace _301._3_Development
             }
 
             var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
-
             if (users.Any(u => u.Username == username))
             {
                 MessageBox.Show("Username already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var encryptedPassword = _encService.EncryptString(password);
+            var passwordHash = PasswordHasher.HashPassword(password);
 
-            var user = new UserDTO {Username = username, EncryptedPassword = encryptedPassword };
+            var user = new UserDTO
+            {
+                Username = username,
+                PasswordHash = passwordHash
+            };
+
             users.Add(user);
             EncryptedStorage.SaveEncrypted(users, _encService);
 
-            MessageBox.Show("Account created.", "Success", MessageBoxButton.OK);
+            NavigationService?.Navigate(new login());
+        }
+
+        private void BtnGoToLogin_Click(object sender, RoutedEventArgs e)
+        {
             NavigationService?.Navigate(new login());
         }
     }
