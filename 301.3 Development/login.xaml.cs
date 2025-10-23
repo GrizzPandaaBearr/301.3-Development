@@ -47,5 +47,10 @@ namespace _301._3_Development
 
             MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void BtnGoToSignup_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

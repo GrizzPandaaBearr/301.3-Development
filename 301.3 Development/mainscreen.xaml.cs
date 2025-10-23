@@ -31,7 +31,7 @@ namespace _301._3_Development
         private void BtnViewData_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Navigate to View Data Page.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            NavigationService.Navigate(new finalform());
+            //NavigationService.Navigate(new finalform());
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)

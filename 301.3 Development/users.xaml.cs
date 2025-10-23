@@ -36,12 +36,12 @@ namespace _301._3_Development
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string query = SearchBox.Text.ToLower();
+            /*string query = SearchBox.Text.ToLower();
             var filtered = allUsers
-                .Where(u => u.Username.ToLower().Contains(query) || u.Name.ToLower().Contains(query))
+                .Where(u => u.First.ToLower().Contains(query) || u.Name.ToLower().Contains(query))
                 .ToList();
 
-            UserList.ItemsSource = filtered;
+            UserList.ItemsSource = filtered;*/
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -50,10 +50,5 @@ namespace _301._3_Development
         }
     }
 
-    public class Users
-    {
-        public required string Name { get; set; }
-        public required string Username { get; set; }
-        public required string Password { get; set; }
-    }
+
 }

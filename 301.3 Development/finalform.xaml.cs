@@ -60,14 +60,14 @@ namespace _301._3_Development
                     Title = "Save Registration Form"
                 };
 
-                if (saveFileDialog.ShowDialog() == true)
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileAccess.Read))
+                    /*using (FileStream fs = new FileStream(saveFileDialog.FileName, FileAccess.Read))
                     {
                         PngBitmapEncoder encoder = new PngBitmapEncoder();
                         encoder.Frames.Add(BitmapFrame.Create(rtb));
                         encoder.Save(fs);
-                    }
+                    }*/
 
                     MessageBox.Show("Form exported successfully!", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

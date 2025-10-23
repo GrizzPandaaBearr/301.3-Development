@@ -45,5 +45,15 @@ namespace _301._3_Development
             MessageBox.Show("Account created.", "Success", MessageBoxButtons.OK);
             NavigationService?.Navigate(new login());
         }
+
+        private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnGoToLogin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

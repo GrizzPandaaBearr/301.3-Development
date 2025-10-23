@@ -35,5 +35,10 @@ namespace _301._3_Development
         {
             LoadLogs();
         }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
