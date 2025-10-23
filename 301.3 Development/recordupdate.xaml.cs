@@ -10,7 +10,7 @@ namespace _301._3_Development
     public partial class recordupdate : Page
     {
         private readonly AesGcmEncryptionService _encService;
-        private List<dynamic> _patients = new List<dynamic>();
+        private List<dynamic> _patients = new();
 
         public recordupdate()
         {
@@ -25,7 +25,7 @@ namespace _301._3_Development
 
             if (_patients == null || !_patients.Any())
             {
-                MessageBox.Show("No patient records found.");
+                PatientList.ItemsSource = null;
                 return;
             }
 
@@ -34,34 +34,33 @@ namespace _301._3_Development
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = SearchBox.Text.Trim().ToLower();
+            var query = (SearchBox.Text ?? string.Empty).Trim();
 
-            if (_patients == null || _patients.Count == 0)
-                return;
-
-            if (string.IsNullOrWhiteSpace(searchText) || searchText == "search by name")
+            if (string.IsNullOrWhiteSpace(query) || query.Equals("search by name", System.StringComparison.OrdinalIgnoreCase))
             {
                 PatientList.ItemsSource = _patients;
+                return;
             }
-            else
-            {
-                var filtered = _patients
-                    .Where(p => p?.Name?.ToString().ToLower().Contains(searchText) == true)
-                    .ToList();
-                PatientList.ItemsSource = filtered;
-            }
+
+            var filtered = _patients
+                .Where(p => {
+                    try { return p?.Name?.ToString().ToLower().Contains(query.ToLower()) == true; }
+                    catch { return false; }
+                })
+                .ToList();
+
+            PatientList.ItemsSource = filtered;
         }
 
         private void PatientButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var patient = button?.DataContext;
+            if (sender is not Button btn) return;
 
-            if (patient == null)
-                return;
+            var patient = btn.DataContext;
+            if (patient == null) return;
 
-            var finalFormPage = new finalform(patient);
-            NavigationService?.Navigate(finalFormPage);
+            var finalPage = new finalform(patient);
+            NavigationService?.Navigate(finalPage);
         }
     }
 }

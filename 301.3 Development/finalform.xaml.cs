@@ -12,63 +12,41 @@ namespace _301._3_Development
     {
         private readonly AesGcmEncryptionService _encService;
         private dynamic _patientData;
+
         public finalform(dynamic patient)
         {
             InitializeComponent();
-            _patientData = patient;
-
-            if (_patientData != null)
-                DisplayPatientData();
-
             _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
+            _patientData = patient;
+            DisplayPatientData();
         }
 
         private void DisplayPatientData()
         {
-            txtPatientName.Text = _patientData.Name ?? "";
+            if (_patientData == null) return;
+
+            txtPatientName.Text = _patientData.Name?.ToString() ?? "";
             txtContactNo.Text = _patientData.ContactNo?.ToString() ?? "";
             txtPassportNo.Text = _patientData.PassportNo?.ToString() ?? "";
-            txtAppointmentDate.Text = _patientData.AppointmentDate?.Tostring ?? "";
-        }
-        private void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-            var patient = new
-            {
-                Name = txtPatientName.Text,
-                ContactNo = txtContactNo.Text,
-                PassportNo = txtPassportNo.Text,
-                AppointmentDate = txtAppointmentDate.Text,
-                PlaceOfBirth = txtPlaceOfBirth.Text,
-                DateOfBirth = txtDateOfBirth.Text,
-                Sex = txtSex.Text,
+            txtAppointmentDate.Text = _patientData.AppointmentDate?.ToString() ?? "";
+            txtPlaceOfBirth.Text = _patientData.PlaceOfBirth?.ToString() ?? "";
+            txtDateOfBirth.Text = _patientData.DateOfBirth?.ToString() ?? "";
+            txtSex.Text = _patientData.Sex?.ToString() ?? "";
 
-                EmergencyName = txtEmergencyName.Text,
-                EmergencyContact = txtEmergencyContact.Text,
-                EmergencyRelation = txtEmergencyRelation.Text,
+            txtEmergencyName.Text = _patientData.EmergencyName?.ToString() ?? _patientData.Emergency?.Name?.ToString() ?? "";
+            txtEmergencyContact.Text = _patientData.EmergencyContact?.ToString() ?? _patientData.Emergency?.Contact?.ToString() ?? "";
+            txtEmergencyRelation.Text = _patientData.EmergencyRelationship?.ToString() ?? _patientData.Emergency?.Relationship?.ToString() ?? "";
 
-                PickupYes = chkPickupYes,
-                PickupNo = chkPickupNo,
+            chkPickupYes.IsChecked = _patientData.PickupYes == true;
+            chkPickupNo.IsChecked = _patientData.PickupNo == true;
+            txtComeBy.Text = _patientData.ComeBy?.ToString() ?? "";
+            txtETA.Text = _patientData.ETA?.ToString() ?? "";
 
-                ComeBy = txtComeBy.Text,
-                ETA = txtETA.Text,
-
-                Inpatient = chkInpatient,
-                Outpatient = chkOutpatient,
-                MedicalCheckUp = chkMedicalCheckup,
-
-                Doctor = txtDoctor.Text,
-                Remark = txtRemark.Text
-            };
-
-            try
-            {
-                PatientStorage.SavePatientData(patient, _encService);
-
-            }
-            catch
-            {
-                MessageBox.Show("Error saving patient data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            chkInpatient.IsChecked = _patientData.Inpatient == true;
+            chkOutpatient.IsChecked = _patientData.Outpatient == true;
+            chkMedicalCheckup.IsChecked = _patientData.MedicalCheckUp == true || _patientData.MedicalCheckup == true;
+            txtDoctor.Text = _patientData.Doctor?.ToString() ?? "";
+            txtRemark.Text = _patientData.Remark?.ToString() ?? "";
         }
     }
 }
