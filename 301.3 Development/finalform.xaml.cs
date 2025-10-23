@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using _301._3_Development.models;
 using _301._3_Development.Security;
 using _301._3_Development.Services;
@@ -10,19 +11,27 @@ namespace _301._3_Development
     public partial class finalform : Page
     {
         private readonly AesGcmEncryptionService _encService;
-
-        public finalform()
+        private dynamic _patientData;
+        public finalform(dynamic patient)
         {
             InitializeComponent();
+            _patientData = patient;
+
+            if (_patientData != null)
+                DisplayPatientData();
+
             _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
 
+        private void DisplayPatientData()
+        {
+            txtPatientName.Text = _patientData.Name ?? "";
+            txtContactNo.Text = _patientData.ContactNo?.ToString() ?? "";
+            txtPassportNo.Text = _patientData.PassportNo?.ToString() ?? "";
+            txtAppointmentDate.Text = _patientData.AppointmentDate?.Tostring ?? "";
+        }
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            Bitmap formImage = new Bitmap(this.Width, this.Height);
-
-
-
             var patient = new
             {
                 Name = txtPatientName.Text,
