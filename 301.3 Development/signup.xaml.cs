@@ -53,7 +53,7 @@ namespace _301._3_Development
 
         private void BtnGoToLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService?.Navigate(new login());
         }
     }
 }

@@ -50,6 +50,7 @@ namespace _301._3_Development
 
         private void BtnGoToSignup_Click(object sender, RoutedEventArgs e)
         {
+            this.NavigationService?.Navigate(new signup());
 
         }
     }

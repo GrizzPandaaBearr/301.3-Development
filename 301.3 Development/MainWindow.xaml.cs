@@ -24,7 +24,7 @@ namespace _301._3_Development
         {
             InitializeComponent();
 
-
+            _mainFrame.NavigationService.Navigate(new login());
         }
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e)

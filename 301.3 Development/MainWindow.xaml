@@ -10,21 +10,8 @@
     Title="{Binding Path=Content.Title, ElementName=_mainFrame}"
     
     Height="450" Width="800">
-    <DockPanel Background="LightGray">
-        <Grid DockPanel.Dock="Top" Background="DimGray">
-            
-            <Rectangle Stroke="BlueViolet" HorizontalAlignment="Right" StrokeThickness="2" Width="50" Height="50" DockPanel.Dock="Right" Fill="Black"/>
-            
-            
-        </Grid>
+    <DockPanel>
         
-
-        <StackPanel DockPanel.Dock="Left" Background="DimGray">
-            <Button x:Name="NewPatientBtn" Content="New Patient" Click="NewPatientBtn_Click"></Button>
-            <Button x:Name="ShowPatients" Content="Show Patients" Click="ShowPatients_Click"></Button>
-            <Button x:Name="RemovePatients" Content="Remove Patients" Click="RemovePatients_Click"></Button>
-
-        </StackPanel>
         <Frame DockPanel.Dock="Right" x:Name="_mainFrame"/>
 
         
