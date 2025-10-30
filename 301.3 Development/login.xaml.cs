@@ -34,13 +34,17 @@ namespace _301._3_Development
             bool valid = PasswordHasher.VerifyPassword(password, user.PasswordHash);
             if (valid)
             {
-                MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Login successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 NavigationService?.Navigate(new mainscreen());
             }
             else
             {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void BtnGoToSignup_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new signup());
         }
     }
 }

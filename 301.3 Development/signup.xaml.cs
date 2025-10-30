@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using _301._3_Development.models;
@@ -16,19 +17,23 @@ namespace _301._3_Development
             InitializeComponent();
             _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
+        private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void BtnSignup_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text?.Trim();
             string password = txtPassword.Password;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) // if either texboxes are empty: reject and return
             {
                 MessageBox.Show("Please provide username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
+            var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService); // checks if username is taken
             if (users.Any(u => u.Username == username))
             {
                 MessageBox.Show("Username already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -44,6 +49,14 @@ namespace _301._3_Development
             };
 
             users.Add(user);
+
+            // debug
+            foreach(var u in users)
+            {
+                Debug.WriteLine(u.Username);
+            }
+            //
+
             EncryptedStorage.SaveEncrypted(users, _encService);
 
             NavigationService?.Navigate(new login());

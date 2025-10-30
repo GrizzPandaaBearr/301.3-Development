@@ -52,5 +52,9 @@ namespace _301._3_Development
             txtDoctor.Text = _patientData.Doctor?.ToString() ?? "";
             txtRemark.Text = _patientData.Remark?.ToString() ?? "";
         }
+        private void BtnExport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
