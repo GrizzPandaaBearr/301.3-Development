@@ -9,6 +9,7 @@ namespace _301._3_Development.Services
 {
     public static class EncryptedStorage
     {
+        // path to appdata on local users machine: /appdata/roaming/_301._3_Development
         private static readonly string UsersFile = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "_301._3_Development",

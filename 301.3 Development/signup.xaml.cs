@@ -50,12 +50,7 @@ namespace _301._3_Development
 
             users.Add(user);
 
-            // debug
-            foreach(var u in users)
-            {
-                Debug.WriteLine(u.Username);
-            }
-            //
+            
 
             EncryptedStorage.SaveEncrypted(users, _encService);
 

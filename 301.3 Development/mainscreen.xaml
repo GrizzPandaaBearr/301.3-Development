@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:_301._3_Development"
         mc:Ignorable="d" 
-  d:DesignHeight="292.417" d:DesignWidth="465"
+  d:DesignHeight="300" d:DesignWidth="470"
   Title="mainscreen" 
   Background="AliceBlue">
 
-    <Grid Margin="20">
+    <Grid Margin="20" Width="420" Height="250">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
