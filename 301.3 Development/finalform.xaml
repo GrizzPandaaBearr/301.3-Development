@@ -110,6 +110,6 @@
         </Border>
 
         <Button Content="Export to Image" Grid.Row="4" Width="126" HorizontalAlignment="Left" Margin="248,10,0,10"
-    Click="BtnExport_Click" Grid.Column="1" Grid.ColumnSpan="2" Background="#E6F7FF"/>
+                Click="BtnExport_Click" Grid.Column="1" Background="#E6F7FF" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>

@@ -43,7 +43,7 @@ namespace _301._3_Development
 
         private void BtnUpdateRecords_Click(object sender, RoutedEventArgs e)
         {
-           
+            NavigationService?.Navigate(new recordupdate());
         }
     }
 }

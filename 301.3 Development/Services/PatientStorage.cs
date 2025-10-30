@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using _301._3_Development.Security;
@@ -7,28 +8,50 @@ namespace _301._3_Development.Services
 {
     public static class PatientStorage
     {
-        private static readonly string PatientsFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "_301._3_Development",
-            "patients_aesgcm.enc");
+        private static readonly string FilePath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "_301.3_Development",
+            "patients.enc"
+        );
 
-        public static void SavePatientData<T>(T data, AesGcmEncryptionService enc)
+        public static void SavePatientData(object patientData, AesGcmEncryptionService encryptionService)
         {
-            var json = JsonSerializer.Serialize(data);
-            var cipher = enc.EncryptString(json);
+            Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
 
-            var dir = Path.GetDirectoryName(PatientsFile);
-            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            var allPatients = LoadPatientData(encryptionService);
+            allPatients.Add(patientData);
 
-            File.WriteAllText(PatientsFile, cipher);
+            var json = JsonSerializer.Serialize(allPatients, new JsonSerializerOptions { WriteIndented = false });
+            var cipherText = encryptionService.EncryptString(json);
+
+            File.WriteAllText(FilePath, cipherText);
         }
 
-        public static T LoadPatientData<T>(AesGcmEncryptionService enc)
+        public static List<dynamic> LoadPatientData(AesGcmEncryptionService encryptionService)
         {
-            if (!File.Exists(PatientsFile)) return default;
-            var cipher = File.ReadAllText(PatientsFile);
-            var json = enc.DecryptString(cipher);
-            return JsonSerializer.Deserialize<T>(json);
+            if (!File.Exists(FilePath))
+                return new List<dynamic>();
+
+            try
+            {
+                var cipherText = File.ReadAllText(FilePath);
+                var json = encryptionService.DecryptString(cipherText);
+
+                var list = JsonSerializer.Deserialize<List<dynamic>>(json);
+                return list ?? new List<dynamic>();
+            }
+            catch
+            {
+                return new List<dynamic>();
+            }
+        }
+
+        public static void SaveAllPatients(IEnumerable<dynamic> patients, AesGcmEncryptionService encryptionService)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
+            var json = JsonSerializer.Serialize(patients, new JsonSerializerOptions { WriteIndented = false });
+            var cipherText = encryptionService.EncryptString(json);
+            File.WriteAllText(FilePath, cipherText);
         }
     }
 }

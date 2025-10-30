@@ -8,8 +8,7 @@ namespace _301._3_Development.models
 {
     public class UserDTO
     {
-        public string FullName { get; set; }
         public string Username { get; set; }
-        public string EncryptedPassword { get; set; } // encrypted password (ciphertext string)
+        public string PasswordHash { get; set; }
     }
 }

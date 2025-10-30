@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using _301._3_Development.Security;
 using _301._3_Development.Services;
 using _301._3_Development.models;
 using _301._3_Development.Scripts;
@@ -20,30 +11,44 @@ namespace _301._3_Development
 {
     public partial class recordupdate : Page
     {
-        private List<Patient> allPatients;
+        private readonly AesGcmEncryptionService _encService;
+        private List<dynamic> _patients = new();
 
         public recordupdate()
         {
             InitializeComponent();
-            LoadPatients();
+            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
+            LoadPatientRecords();
         }
 
-        private void LoadPatients()
+        private void LoadPatientRecords()
         {
-            allPatients = new List<Patient>
+            _patients = PatientStorage.LoadPatientData(_encService);
+
+            if (_patients == null || !_patients.Any())
             {
-            };
+                PatientList.ItemsSource = null;
+                return;
+            }
 
-            PatientList.ItemsSource = allPatients;
-
+            PatientList.ItemsSource = _patients;
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string query = SearchBox.Text.ToLower();
+            var query = (SearchBox.Text ?? string.Empty).Trim();
 
-            var filtered = allPatients
-                .Where(p => p.FirstName.ToLower().Contains(query))
+            if (string.IsNullOrWhiteSpace(query) || query.Equals("search by name", System.StringComparison.OrdinalIgnoreCase))
+            {
+                PatientList.ItemsSource = _patients;
+                return;
+            }
+
+            var filtered = _patients
+                .Where(p => {
+                    try { return p?.Name?.ToString().ToLower().Contains(query.ToLower()) == true; }
+                    catch { return false; }
+                })
                 .ToList();
 
             PatientList.ItemsSource = filtered;
@@ -51,14 +56,13 @@ namespace _301._3_Development
 
         private void PatientButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Content is string patientName)
-            {
-                var selected = allPatients.FirstOrDefault(p => p.FirstName == patientName);
+            if (sender is not Button btn) return;
 
-                if (selected != null)
-                {
-                }
-            }
+            var patient = btn.DataContext;
+            if (patient == null) return;
+
+            var finalPage = new finalform(patient);
+            NavigationService?.Navigate(finalPage);
         }
     }
 }

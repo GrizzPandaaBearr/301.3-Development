@@ -1,81 +1,56 @@
-﻿using _301._3_Development.Services;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using _301._3_Development.Scripts;
+using System.Xml.Linq;
+using _301._3_Development.models;
+using _301._3_Development.Security;
+using _301._3_Development.Services;
 
 namespace _301._3_Development
 {
     public partial class finalform : Page
     {
+        private readonly AesGcmEncryptionService _encService;
+        private dynamic _patientData;
 
-        public finalform(Patient patient)
+        public finalform(dynamic patient)
         {
             InitializeComponent();
-
-            txtPatientName.Text = $" {patient.FirstName} {patient.LastName}";
-            txtContactNo.Text = patient.Phone;
-            txtPassportNo.Text = "placeholder"; // sort it out later by god
-
-            txtEmergencyName.Text = "patient.EmergencyName";
-            txtEmergencyContact.Text = "patient.EmergencyContact";
-            txtEmergencyRelation.Text = "patient.EmergencyRelation";
-
-            chkPickupYes.IsChecked = false;
-            chkPickupNo.IsChecked = false;
-            txtComeBy.Text = "patient.ComeBy";
-            txtETA.Text = "patient.ETA";
-
-            chkInpatient.IsChecked = false;
-            chkOutpatient.IsChecked = false;
-            chkMedicalCheckup.IsChecked = false;
-
-            txtDoctor.Text = patient.DoctorID.ToString();
-            txtRemark.Text = patient.Medical_History;
+            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
+            _patientData = patient;
+            DisplayPatientData();
         }
 
-        /*public finalform()
+        private void DisplayPatientData()
         {
-            InitializeComponent();
-        }*/
+            if (_patientData == null) return;
 
-        private void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                RenderTargetBitmap rtb = new RenderTargetBitmap(
-                    (int)this.ActualWidth,
-                    (int)this.ActualHeight,
-                    96d, 96d, PixelFormats.Pbgra32);
+            txtPatientName.Text = _patientData.Name?.ToString() ?? "";
+            txtContactNo.Text = _patientData.ContactNo?.ToString() ?? "";
+            txtPassportNo.Text = _patientData.PassportNo?.ToString() ?? "";
+            txtAppointmentDate.Text = _patientData.AppointmentDate?.ToString() ?? "";
+            txtPlaceOfBirth.Text = _patientData.PlaceOfBirth?.ToString() ?? "";
+            txtDateOfBirth.Text = _patientData.DateOfBirth?.ToString() ?? "";
+            txtSex.Text = _patientData.Sex?.ToString() ?? "";
 
-                rtb.Render(this);
+            txtEmergencyName.Text = _patientData.EmergencyName?.ToString() ?? _patientData.Emergency?.Name?.ToString() ?? "";
+            txtEmergencyContact.Text = _patientData.EmergencyContact?.ToString() ?? _patientData.Emergency?.Contact?.ToString() ?? "";
+            txtEmergencyRelation.Text = _patientData.EmergencyRelationship?.ToString() ?? _patientData.Emergency?.Relationship?.ToString() ?? "";
 
-                SaveFileDialog saveFileDialog = new SaveFileDialog
-                {
-                    Filter = "PNG Image|*.png",
-                    Title = "Save Registration Form"
-                };
+            chkPickupYes.IsChecked = _patientData.PickupYes == true;
+            chkPickupNo.IsChecked = _patientData.PickupNo == true;
+            txtComeBy.Text = _patientData.ComeBy?.ToString() ?? "";
+            txtETA.Text = _patientData.ETA?.ToString() ?? "";
 
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    /*using (FileStream fs = new FileStream(saveFileDialog.FileName, FileAccess.Read))
-                    {
-                        PngBitmapEncoder encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(rtb));
-                        encoder.Save(fs);
-                    }*/
-
-                    MessageBox.Show("Form exported successfully!", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Error while exporting form.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            chkInpatient.IsChecked = _patientData.Inpatient == true;
+            chkOutpatient.IsChecked = _patientData.Outpatient == true;
+            chkMedicalCheckup.IsChecked = _patientData.MedicalCheckUp == true || _patientData.MedicalCheckup == true;
+            txtDoctor.Text = _patientData.Doctor?.ToString() ?? "";
+            txtRemark.Text = _patientData.Remark?.ToString() ?? "";
         }
     }
 }

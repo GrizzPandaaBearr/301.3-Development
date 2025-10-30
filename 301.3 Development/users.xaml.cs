@@ -33,7 +33,7 @@ namespace _301._3_Development
 
             UserList.ItemsSource = allUsers;
         }
-
+        
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             /*string query = SearchBox.Text.ToLower();
@@ -48,7 +48,13 @@ namespace _301._3_Development
         {
             NavigationService.Navigate(new userlogs());
         }
+
+        public class Users
+        {
+            public required string Name { get; set; }
+            public required string Username { get; set; }
+            public required string Password { get; set; }
+        }
+
     }
-
-
 }
