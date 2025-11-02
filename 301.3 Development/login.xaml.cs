@@ -17,7 +17,7 @@ namespace _301._3_Development
             _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin_Click(object sender, RoutedEventArgs e) // check what role user is before redirecting
         {
             string username = txtUsername.Text?.Trim();
             string password = txtPassword.Password;
