@@ -13,7 +13,7 @@
     Height="450" Width="800">
     <DockPanel>
         <Grid DockPanel.Dock="Left">
-            <controls:HamburgerMenu Width=""></controls:HamburgerMenu>
+            <controls:HamburgerMenu></controls:HamburgerMenu>
         </Grid>
         <Frame DockPanel.Dock="Right" x:Name="_mainFrame" NavigationUIVisibility="Hidden" />
 

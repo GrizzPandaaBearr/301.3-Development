@@ -42,10 +42,10 @@ namespace _301._3_Development.Controls
                     SetAdminControl();
                     break;
                 case "doctor":
-                    SetAdminControl();
+                    SetDoctorControl();
                     break;
                 case "patient":
-                    SetAdminControl();
+                    SetPatientControl();
                     break;
                 default:
                     Debug.Write($"Set buttons failed: role = {role}");
