@@ -5,13 +5,16 @@
         
 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:_301._3_Development.Controls"
     xmlns:local="clr-namespace:_301._3_Development"
     mc:Ignorable="d"
     Title="{Binding Path=Content.Title, ElementName=_mainFrame}"
     
     Height="450" Width="800">
     <DockPanel>
-        
+        <Grid DockPanel.Dock="Left">
+            <controls:HamburgerMenu Width=""></controls:HamburgerMenu>
+        </Grid>
         <Frame DockPanel.Dock="Right" x:Name="_mainFrame" NavigationUIVisibility="Hidden" />
 
         
