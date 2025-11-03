@@ -22,16 +22,20 @@ namespace _301._3_Development.Controls
     /// </summary>
     public partial class HamburgerMenu : UserControl
     {
+        public bool collapsed {  get; set; }
         private List<System.Windows.Controls.Button> _buttons;
+        private List<System.Windows.Controls.RowDefinition> _buttonSlots;
         public HamburgerMenu()
         {
             InitializeComponent();
+
+            BuildBurger("patient");
         }
 
         private void BuildBurger(string role) // creates hamburger menu appropriate to role of user. i.e: admin, patient, doctor.
         {
-            
-
+            SetButtons(role);
+            AddButtons();
         }
 
         private void SetButtons(string role)
@@ -53,12 +57,26 @@ namespace _301._3_Development.Controls
             }
         }
 
+
+        private void AddButtons()
+        {
+            int i = 3;
+            foreach(Button btn in _buttons)
+            {
+                btn.Name = $"Btn{i}";
+                HamburgerControlGrid.Children.Add(btn);
+                Grid.SetRow(btn, i);
+                
+                i++;
+            }
+        }
+
         private int SetAdminControl()
         {
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
             Button button = new Button();
-
+            button.Content = "placeholder";
             // add buttons to list
             btnList.Add(button);
 
@@ -72,7 +90,7 @@ namespace _301._3_Development.Controls
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
             Button button = new Button();
-
+            button.Content = "placeholder";
             // add buttons to list
             btnList.Add(button);
 
@@ -86,7 +104,7 @@ namespace _301._3_Development.Controls
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
             Button button = new Button();
-
+            button.Content = "placeholder";
             // add buttons to list
             btnList.Add(button);
 
@@ -96,5 +114,23 @@ namespace _301._3_Development.Controls
             return 1;
         }
 
+        private void ActivateHamburger_Click(object sender, RoutedEventArgs e)
+        {
+            if(collapsed)
+            {
+                Grid.SetColumn(ActivateHamburger, 3);
+                Grid.SetColumnSpan(ActivateHamburger, 1);
+                HamburgerControlGrid.Width = 225;
+                collapsed = false;
+                return;
+            }
+            Grid.SetColumnSpan(ActivateHamburger, 4);
+            Grid.SetColumn(ActivateHamburger, 0);
+
+            HamburgerControlGrid.Width = double.NaN;
+            collapsed = true;
+
+
+        }
     }
 }

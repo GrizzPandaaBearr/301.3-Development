@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:_301._3_Development.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="225">
-    <Grid Background="DarkSlateBlue" Width="225">
+    <Grid x:Name="HamburgerControlGrid" Background="DarkSlateBlue" Width="225">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -18,8 +18,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ActivateHamburger" Content="x" Grid.Column="3" Click="ActivateHamburger_Click"/>
+        </Grid>
+        
+
         <!-- Sample button styling, this will be generated on parent initialization-->
-        <Button x:Name="sampleButton" Content="Page1" Grid.Row="1"></Button>
+        <Button x:Name="sampleButton" Content="Page1" Grid.Row="2"></Button>
 
     </Grid>
 </UserControl>
