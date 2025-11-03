@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using _301._3_Development.Scripts;
 using _301._3_Development.Windows;
 using _301._3_Development.Pages;
+using _301._3_Development.models;
+using _301._3_Development.Controls;
 
 
 namespace _301._3_Development
@@ -20,11 +22,17 @@ namespace _301._3_Development
     /// </summary>
     public partial class MainWindow : Window
     {
+        UserDTO? userDTO;
         public MainWindow()
         {
             InitializeComponent();
 
             _mainFrame.NavigationService.Navigate(new login());
+        }
+        public void ActivateHamburger(string username)
+        {
+            HamburgerMenu hamburger = new HamburgerMenu(username);
+            hamburgerGrid.Children.Add(hamburger);
         }
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e)

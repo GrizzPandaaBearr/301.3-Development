@@ -35,7 +35,7 @@ namespace _301._3_Development
             if (valid)
             {
                 MessageBox.Show("Login successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NavigationService?.Navigate(new mainscreen());
+                NavigationService?.Navigate(new mainscreen(user));
             }
             else
             {

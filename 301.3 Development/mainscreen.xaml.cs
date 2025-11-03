@@ -12,14 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.models;
 
 namespace _301._3_Development
 {
     public partial class mainscreen : Page
     {
-        public mainscreen()
+        public mainscreen(UserDTO user)
         {
             InitializeComponent();
+            MainWindow.a
         }
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)

@@ -23,38 +23,42 @@ namespace _301._3_Development.Controls
     public partial class HamburgerMenu : UserControl
     {
         public bool collapsed {  get; set; }
-        private List<System.Windows.Controls.Button> _buttons;
-        private List<System.Windows.Controls.RowDefinition> _buttonSlots;
-        public HamburgerMenu()
+        private List<Button> _buttons;
+        public HamburgerMenu(string role)
         {
             InitializeComponent();
+            
+            _buttons = SetButtons("patient");
 
-            BuildBurger("patient");
+            BuildBurger();
         }
 
-        private void BuildBurger(string role) // creates hamburger menu appropriate to role of user. i.e: admin, patient, doctor.
+        private void BuildBurger() // creates hamburger menu appropriate to role of user. i.e: admin, patient, doctor.
         {
-            SetButtons(role);
+            
             AddButtons();
         }
 
-        private void SetButtons(string role)
+        private List<Button> SetButtons(string role)
         {
+            List<Button> btnList = new List<Button>();
             switch (role)
             {
                 case "admin":
-                    SetAdminControl();
+                    btnList = SetAdminControl();
                     break;
                 case "doctor":
-                    SetDoctorControl();
+                    btnList = SetDoctorControl();
                     break;
                 case "patient":
-                    SetPatientControl();
+                    btnList = SetPatientControl();
                     break;
                 default:
                     Debug.Write($"Set buttons failed: role = {role}");
                     break;
             }
+
+            return btnList;
         }
 
 
@@ -71,7 +75,7 @@ namespace _301._3_Development.Controls
             }
         }
 
-        private int SetAdminControl()
+        private List<Button> SetAdminControl()
         {
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
@@ -81,11 +85,10 @@ namespace _301._3_Development.Controls
             btnList.Add(button);
 
             // set buttons
-            _buttons = btnList;
 
-            return 1;
+            return btnList;
         }
-        private int SetDoctorControl()
+        private List<Button> SetDoctorControl()
         {
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
@@ -95,11 +98,10 @@ namespace _301._3_Development.Controls
             btnList.Add(button);
 
             // set buttons
-            _buttons = btnList;
 
-            return 1;
+            return btnList;
         }
-        private int SetPatientControl()
+        private List<Button> SetPatientControl()
         {
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
@@ -109,9 +111,8 @@ namespace _301._3_Development.Controls
             btnList.Add(button);
 
             // set buttons
-            _buttons = btnList;
 
-            return 1;
+            return btnList;
         }
 
         private void ActivateHamburger_Click(object sender, RoutedEventArgs e)
