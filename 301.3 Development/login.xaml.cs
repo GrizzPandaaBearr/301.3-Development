@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using _301._3_Development.models;
+using _301._3_Development.Scripts;
+using _301._3_Development.Scripts.Session;
 using _301._3_Development.Security;
 using _301._3_Development.Services;
 
@@ -10,6 +13,7 @@ namespace _301._3_Development
     public partial class login : Page
     {
         private readonly AesGcmEncryptionService _encService;
+        public event EventHandler LoginSuccess;
 
         public login()
         {
@@ -35,7 +39,18 @@ namespace _301._3_Development
             if (valid)
             {
                 MessageBox.Show("Login successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NavigationService?.Navigate(new mainscreen(user));
+                byte[] sessionkey = KeyManager.GetOrCreateKey();
+                if (sessionkey == null)
+                {
+                    Debug.WriteLine("Session failed to create key");
+                    return;
+                }
+
+                //experimental
+                User dummy = new User();
+                dummy.SetDummyUser();
+                SessionManager.Instance.StartSession(dummy,sessionkey);
+                LoginSuccess?.Invoke(this, EventArgs.Empty);
             }
             else
             {

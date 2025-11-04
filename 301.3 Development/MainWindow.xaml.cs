@@ -13,6 +13,8 @@ using _301._3_Development.Windows;
 using _301._3_Development.Pages;
 using _301._3_Development.models;
 using _301._3_Development.Controls;
+using _301._3_Development.Scripts.Session;
+using System.Diagnostics;
 
 
 namespace _301._3_Development
@@ -22,13 +24,30 @@ namespace _301._3_Development
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserDTO? userDTO;
         public MainWindow()
         {
             InitializeComponent();
+            var loginpage = new login();
+            loginpage.LoginSuccess += Login_Success;
 
-            _mainFrame.NavigationService.Navigate(new login());
+            _mainFrame.Content = loginpage;
+
         }
+
+        private void Login_Success(object sender, EventArgs e)
+        {
+            ShowMain();
+        }
+
+        private void ShowMain()
+        {
+            if(SessionManager.Instance.CurrentUser != null)
+            {
+                Debug.WriteLine($"LOGIN SUCCESS Current user is {SessionManager.Instance.CurrentUser}");
+                _mainFrame.Content = new mainscreen();
+            }
+        }
+
         public void ActivateHamburger(string username)
         {
             HamburgerMenu hamburger = new HamburgerMenu(username);

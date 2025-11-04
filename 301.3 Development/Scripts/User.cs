@@ -24,6 +24,18 @@ namespace _301._3_Development.Scripts
         public UserRole Role {  get; set; }
         public string Phone { get; set; }
 
+
+        public void SetDummyUser()
+        {
+            Id = 0;
+            FirstName = "DummyFirstName";
+            LastName = "DummyLastName";
+            Email = "DummyFirstName@gmail.com";
+            PasswordHash = "DummyPasswordHash";
+            Role = UserRole.Patient;
+            Phone = "092843752787";
+        }
     }
+
     
 }

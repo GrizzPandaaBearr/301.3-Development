@@ -18,10 +18,12 @@ namespace _301._3_Development
 {
     public partial class mainscreen : Page
     {
-        public mainscreen(UserDTO user)
+        public mainscreen()
         {
             InitializeComponent();
-            MainWindow.a
+
+
+            
         }
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)

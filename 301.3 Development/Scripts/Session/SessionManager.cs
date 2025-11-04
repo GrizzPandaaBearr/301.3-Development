@@ -16,7 +16,7 @@ namespace _301._3_Development.Scripts.Session
         public DateTime SessionStartTime { get; private set; }
         public TimeSpan SessionTimeout { get; set; } = TimeSpan.FromMinutes(30);
 
-        private SessionManager() { }
+        
 
         public static SessionManager Instance
         {
