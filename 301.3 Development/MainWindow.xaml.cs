@@ -43,14 +43,15 @@ namespace _301._3_Development
         {
             if(SessionManager.Instance.CurrentUser != null)
             {
-                Debug.WriteLine($"LOGIN SUCCESS Current user is {SessionManager.Instance.CurrentUser}");
+                Debug.WriteLine($"LOGIN SUCCESS Current user is {SessionManager.Instance.CurrentUser.FirstName} \nRole: {SessionManager.Instance.CurrentUser.Role}");
                 _mainFrame.Content = new mainscreen();
+                ActivateHamburger();
             }
         }
 
-        public void ActivateHamburger(string username)
+        private void ActivateHamburger()
         {
-            HamburgerMenu hamburger = new HamburgerMenu(username);
+            HamburgerMenu hamburger = new HamburgerMenu(SessionManager.Instance.CurrentUser.Role, _mainFrame);
             hamburgerGrid.Children.Add(hamburger);
         }
 

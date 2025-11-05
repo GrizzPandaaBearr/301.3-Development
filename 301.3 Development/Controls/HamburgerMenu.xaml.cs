@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.Scripts;
+using _301._3_Development.Services;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace _301._3_Development.Controls
@@ -24,11 +26,16 @@ namespace _301._3_Development.Controls
     {
         public bool collapsed {  get; set; }
         private List<Button> _buttons;
-        public HamburgerMenu(string role)
+        ButtonEventHandler ButtonEventHandler { get; set; }
+        public HamburgerMenu(User.UserRole role, Frame mainFrame)
         {
             InitializeComponent();
+
+            ButtonEventHandler handler = new ButtonEventHandler(mainFrame);
             
-            _buttons = SetButtons("patient");
+            _buttons = SetButtons(role);
+
+            collapsed = true;
 
             BuildBurger();
         }
@@ -37,20 +44,21 @@ namespace _301._3_Development.Controls
         {
             
             AddButtons();
+            ButtonRouter();
         }
 
-        private List<Button> SetButtons(string role)
+        private List<Button> SetButtons(User.UserRole role)
         {
             List<Button> btnList = new List<Button>();
             switch (role)
             {
-                case "admin":
+                case User.UserRole.Admin:
                     btnList = SetAdminControl();
                     break;
-                case "doctor":
+                case User.UserRole.Doctor:
                     btnList = SetDoctorControl();
                     break;
-                case "patient":
+                case User.UserRole.Patient:
                     btnList = SetPatientControl();
                     break;
                 default:
@@ -73,6 +81,19 @@ namespace _301._3_Development.Controls
                 
                 i++;
             }
+        }
+
+        private Button ButtonRouter()
+        {
+            Button btn = new System.Windows.Controls.Button();
+
+            btn.Name = route.Name;
+            btn.Content = route.Name;
+            btn.Click += new RoutedEventHandler(ButtonEventHandler.PatientInformationRoute);
+
+
+
+            return btn;
         }
 
         private List<Button> SetAdminControl()
@@ -105,8 +126,7 @@ namespace _301._3_Development.Controls
         {
             List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
             // create buttons
-            Button button = new Button();
-            button.Content = "placeholder";
+            Button button = ButtonRouter(new patientdataform());
             // add buttons to list
             btnList.Add(button);
 
@@ -128,7 +148,7 @@ namespace _301._3_Development.Controls
             Grid.SetColumnSpan(ActivateHamburger, 4);
             Grid.SetColumn(ActivateHamburger, 0);
 
-            HamburgerControlGrid.Width = double.NaN;
+            HamburgerControlGrid.Width = 50;
             collapsed = true;
 
 
