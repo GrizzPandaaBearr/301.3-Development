@@ -26,14 +26,18 @@ namespace _301._3_Development.Controls
     {
         public bool collapsed {  get; set; }
         private List<Button> _buttons;
+
+        private Frame mainFrame {  get; set; }
+
         ButtonEventHandler ButtonEventHandler { get; set; }
-        public HamburgerMenu(User.UserRole role, Frame mainFrame)
+        public HamburgerMenu(User.UserRole role, Frame _mainFrame)
         {
             InitializeComponent();
 
-            ButtonEventHandler handler = new ButtonEventHandler(mainFrame);
-            
-            _buttons = SetButtons(role);
+            //ButtonEventHandler handler = new ButtonEventHandler(mainFrame);
+
+            mainFrame = _mainFrame;
+            _buttons = SetButtonEvents(role);
 
             collapsed = true;
 
@@ -44,29 +48,42 @@ namespace _301._3_Development.Controls
         {
             
             AddButtons();
-            ButtonRouter();
         }
 
-        private List<Button> SetButtons(User.UserRole role)
+        private List<Button> SetButtonEvents(User.UserRole role)
         {
-            List<Button> btnList = new List<Button>();
+            List<Button> buttons = new List<Button>();
+
+            List<(string Label, Action ClickAction)> evntList = new List<(string Label, Action ClickAction)>();
             switch (role)
             {
                 case User.UserRole.Admin:
-                    btnList = SetAdminControl();
+                    //btnList = SetAdminControl();
                     break;
                 case User.UserRole.Doctor:
-                    btnList = SetDoctorControl();
+                    //btnList = SetDoctorControl();
                     break;
                 case User.UserRole.Patient:
-                    btnList = SetPatientControl();
+                    evntList = SetPatientControl();
                     break;
                 default:
                     Debug.Write($"Set buttons failed: role = {role}");
                     break;
             }
 
-            return btnList;
+            foreach (var (label, action) in evntList)
+            {
+                var btn = new Button
+                {
+                    Content = label,
+
+                };
+                btn.Click += (_, _) => action();
+
+                buttons.Add(btn);
+            }
+
+            return buttons;
         }
 
 
@@ -83,18 +100,7 @@ namespace _301._3_Development.Controls
             }
         }
 
-        private Button ButtonRouter()
-        {
-            Button btn = new System.Windows.Controls.Button();
 
-            btn.Name = route.Name;
-            btn.Content = route.Name;
-            btn.Click += new RoutedEventHandler(ButtonEventHandler.PatientInformationRoute);
-
-
-
-            return btn;
-        }
 
         private List<Button> SetAdminControl()
         {
@@ -122,17 +128,18 @@ namespace _301._3_Development.Controls
 
             return btnList;
         }
-        private List<Button> SetPatientControl()
+        private List<(string Label, Action ClickAction)> SetPatientControl()
         {
-            List<System.Windows.Controls.Button> btnList = new List<System.Windows.Controls.Button>();
+            List<(string Label, Action ClickAction)> buttons = new();
+
+            buttons.Add(("Profile", () => mainFrame.Content = new informationform()));
             // create buttons
-            Button button = ButtonRouter(new patientdataform());
+            
             // add buttons to list
-            btnList.Add(button);
 
             // set buttons
 
-            return btnList;
+            return buttons;
         }
 
         private void ActivateHamburger_Click(object sender, RoutedEventArgs e)
@@ -152,6 +159,15 @@ namespace _301._3_Development.Controls
             collapsed = true;
 
 
+        }
+
+        public void PatientInformationRoute(object sender, RoutedEventArgs e)
+        {
+            patientdataform dataform = new patientdataform();
+
+            mainFrame.Content = dataform;
+
+            Debug.Write($"You Pressed routed button: {((FrameworkElement)e.Source).Name}");
         }
     }
 }
