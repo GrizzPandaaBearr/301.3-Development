@@ -1,4 +1,5 @@
 ﻿using _301._3_Development.models;
+using _301._3_Development.Scripts.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,19 @@ namespace _301._3_Development.Services
                 BaseAddress = new Uri(baseUrl)
             };
         }
+        public async Task<bool> UpdateAppointmentStatus(int appointmentId, string status)
+        {
+            var data = new { Status = status };
+            var result = await SessionManager.Instance.Api.PostAsync<object>($"Appointments/{appointmentId}/status", data);
 
+            return result != null;
+        }
+        public async Task<bool> CancelAppointment(int appointmentId)
+        {
+            var result = await SessionManager.Instance.Api.PostAsync<object>($"Appointments/{appointmentId}/cancel", null);
+
+            return result != null;
+        }
         public void SetToken(string token)
         {
             _http.DefaultRequestHeaders.Authorization =
@@ -37,7 +50,11 @@ namespace _301._3_Development.Services
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            return System.Text.Json.JsonSerializer.Deserialize<T>(json);
+            MessageBox.Show(json);
+            return System.Text.Json.JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
         }
 
         public async Task<T?> PostAsync<T>(string url, object data)

@@ -1,4 +1,5 @@
 ﻿using _301._3_Development.models;
+using _301._3_Development.Scripts.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,22 @@ namespace _301._3_Development.Pages.DoctorPages
             _user = user;
 
             DoctorNameText.Text = $"{user.Name_First} {user.Name_Last} — Patients";
+            this.Loaded += DoctorPatientsPage_Loaded;
+        }
+        private async void DoctorPatientsPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            await LoadPatients();
+        }
+        public async Task<List<DoctorPatientDTO>> FetchMyPatientsAsync()
+        {
+            int doctorId = _user.UserID;
 
-            // Later: Fetch doctor's patients from API
+            return await SessionManager.Instance.Api.GetAsync<List<DoctorPatientDTO>>($"Appointments/doctor/{doctorId}/patients");
+        }
+        private async Task LoadPatients()
+        {
+            var patients = await FetchMyPatientsAsync();
+            PatientsListView.ItemsSource = patients;
         }
     }
 }

@@ -3,6 +3,7 @@ using _301._3_Development.Scripts.Session;
 using _301._3_Development.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -29,19 +30,40 @@ namespace _301._3_Development.Pages.PatientPages
         {
             InitializeComponent();
             _userDTO = userDTO;
-                
+            this.Loaded += PatientBookAppointmentsPage_Loaded;
         }
         
+        private async void PatientBookAppointmentsPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            await BindComboToDoctor();
+        }
 
         public async Task<List<DoctorDTO>> FetchDoctorsAsync()
         {
-            var doctors = await SessionManager.Instance.Api.GetAsync<List<DoctorDTO>>("Doctors");
-            return doctors;
+            try
+            {
+                var doctors = await SessionManager.Instance.Api.GetAsync<List<DoctorDTO>>("Doctors");
+                
+                return doctors;
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+                   
         }
-        public async void BindComboToDoctor()
+        public async Task BindComboToDoctor()
         {
             var doctors = await FetchDoctorsAsync();
+            foreach(var doctor in doctors)
+            {
+                Debug.WriteLine(doctor.Name_First);
+            }
             DoctorComboBox.ItemsSource = doctors;
+            DoctorComboBox.DisplayMemberPath = "Name_First"; // can use a property in DTO combining first + last name
+            DoctorComboBox.SelectedValuePath = "DoctorID";
         }
 
         private async void BookAppointment_Click(object sender, RoutedEventArgs e)
@@ -91,28 +113,7 @@ namespace _301._3_Development.Pages.PatientPages
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}");
             }
-            /*string json = JsonConvert.SerializeObject(dto);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                using var client = new HttpClient();
-                var res = await client.PostAsync("http://yourapi/appointments/book", content);
-
-                if (res.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Appointment booked!");
-                    ReasonTextBox.Text = "";
-                }
-                else
-                {
-                    MessageBox.Show($"Error: {res.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error sending request: {ex.Message}");
-            }*/
+            
         }
     }
 }

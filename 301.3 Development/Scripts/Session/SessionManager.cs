@@ -38,7 +38,8 @@ namespace _301._3_Development.Scripts.Session
 
         private SessionManager()
         {
-            Api = new ApiClient("https://192.168.1.43:5001/api/");
+            //Api = new ApiClient("https://<IpOfServer>:5001/api/"); // do this if local connection dosent work
+            Api = new ApiClient("https://raspberrypi.local:5001/api/");
         }
 
         public bool IsSessionActive()
@@ -65,21 +66,7 @@ namespace _301._3_Development.Scripts.Session
 
             
         }
-        /*
-          usage:::
-         
-            // On successful login
-            var key = EncryptionHelper.DeriveSessionKey(user.PasswordHash);
-            SessionManager.Instance.StartSession(user, key);
 
-            // Check if session is still active
-            if (!SessionManager.Instance.IsSessionActive())
-            {
-                SessionManager.Instance.EndSession();
-                // Redirect user to login
-            }
-
-         */
     }
 
 }

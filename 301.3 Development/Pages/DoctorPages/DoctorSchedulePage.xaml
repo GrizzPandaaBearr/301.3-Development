@@ -15,11 +15,24 @@
                        FontWeight="Bold"
                        Margin="0 0 0 20"/>
 
-            <ListBox x:Name="ScheduleList"
-                     Height="350"
-                     Background="White"
-                     BorderThickness="1"
-                     BorderBrush="#aaa"/>
+            <ListView x:Name="AppointmentsList" SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Patient" DisplayMemberBinding="{Binding PatientName}" />
+                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" />
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ComboBox x:Name="StatusCombo" Width="150" Margin="0,10,0,0">
+                <ComboBoxItem Content="Scheduled" />
+                <ComboBoxItem Content="Completed" />
+                <ComboBoxItem Content="Canceled" />
+            </ComboBox>
+
+            <Button Content="Update Status" Width="150" Margin="0,10,0,0"
+        Click="UpdateStatus_Click" />
         </StackPanel>
     </Grid>
 </Page>

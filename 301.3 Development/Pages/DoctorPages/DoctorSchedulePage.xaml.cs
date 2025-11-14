@@ -1,4 +1,5 @@
 ﻿using _301._3_Development.models;
+using _301._3_Development.Scripts.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,45 @@ namespace _301._3_Development.Pages.DoctorPages
         {
             InitializeComponent();
             _user = user;
-
+            this.Loaded += OnLoaded;
             Header.Text = $"{user.Name_First} {user.Name_Last}'s Schedule";
+        }
+        private async void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LoadAppointments();
+        }
+
+        private async void UpdateStatus_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = AppointmentsList.SelectedItem as AppointmentDTO;
+            if (selected == null) return;
+
+            string newStatus = (StatusCombo.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (string.IsNullOrEmpty(newStatus)) return;
+
+            bool ok = await SessionManager.Instance.Api.UpdateAppointmentStatus(selected.AppointmentID, newStatus);
+
+            if (ok)
+            {
+                MessageBox.Show("Status updated.");
+                await LoadAppointments(); // reload
+            }
+        }
+        private async Task LoadAppointments()
+        {
+            try
+            {
+                int doctorId = _user.UserID;
+
+                var appts = await SessionManager.Instance.Api
+                    .GetAsync<List<AppointmentDTO>>($"Appointments/doctor/{doctorId}");
+
+                AppointmentsList.ItemsSource = appts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load appointments: {ex.Message}");
+            }
         }
     }
 }

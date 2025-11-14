@@ -15,10 +15,15 @@
                        FontWeight="Bold"
                        Margin="0 0 0 20"/>
 
-            <ListBox x:Name="PatientsList"
-                     Height="350"
-                     Background="White"
-                     BorderBrush="#aaa"/>
+            <ListView x:Name="PatientsListView" Width="500" Height="300">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding FullName}" />
+                        <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Phone}" />
+                        <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>

@@ -101,16 +101,6 @@ namespace _301._3_Development.Controls
 
         private List<(string Label, Action ClickAction)> SetPatientControls()
         {
-            /*List<(string Label, Action ClickAction)> buttons = new();
-
-            buttons.Add(("Profile", () => mainFrame.Content = new informationform()));
-            // create buttons
-            
-            // add buttons to list
-
-            // set buttons
-
-            return buttons;*/
             return new()
             {
                 ("Profile", () => mainFrame.Content = new PatientProfilePage(_user)),
