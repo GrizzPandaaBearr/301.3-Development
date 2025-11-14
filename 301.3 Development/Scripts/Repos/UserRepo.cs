@@ -29,8 +29,8 @@ namespace _301._3_Development.Scripts.Repos
             cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
             cmd.Parameters.AddWithValue("@Role", user.Role.ToString());
-            cmd.Parameters.AddWithValue("@First", user.FirstName);
-            cmd.Parameters.AddWithValue("@Last", user.LastName);
+            cmd.Parameters.AddWithValue("@First", user.Name_First);
+            cmd.Parameters.AddWithValue("@Last", user.Name_First);
             cmd.Parameters.AddWithValue("@Phone", user.Phone);
 
             cmd.ExecuteNonQuery();

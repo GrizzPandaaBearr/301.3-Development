@@ -33,7 +33,15 @@ namespace _301._3_Development
             _mainFrame.Content = loginpage;
 
         }
+        private void Log_out(object sender, EventArgs e)
+        {
+            SessionManager.Instance.EndSession();
+            DeactivateHamburger();
+            var loginpage = new login();
+            loginpage.LoginSuccess += Login_Success;
 
+            _mainFrame.Content = loginpage;
+        }
         private void Login_Success(object sender, EventArgs e)
         {
             ShowMain();
@@ -43,7 +51,7 @@ namespace _301._3_Development
         {
             if(SessionManager.Instance.CurrentUser != null)
             {
-                Debug.WriteLine($"LOGIN SUCCESS Current user is {SessionManager.Instance.CurrentUser.FirstName} \nRole: {SessionManager.Instance.CurrentUser.Role}");
+                Debug.WriteLine($"LOGIN SUCCESS Current user is {SessionManager.Instance.CurrentUser.Name_First} \nRole: {SessionManager.Instance.CurrentUser.Role}");
                 _mainFrame.Content = new mainscreen();
                 ActivateHamburger();
             }
@@ -51,8 +59,14 @@ namespace _301._3_Development
 
         private void ActivateHamburger()
         {
-            HamburgerMenu hamburger = new HamburgerMenu(SessionManager.Instance.CurrentUser.Role, _mainFrame);
+            HamburgerMenu hamburger = new HamburgerMenu(SessionManager.Instance.CurrentUser, _mainFrame);
+            hamburger.Logout += Log_out;
             hamburgerGrid.Children.Add(hamburger);
+        }
+
+        private void DeactivateHamburger()
+        {
+            hamburgerGrid.Children.Clear();
         }
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e)

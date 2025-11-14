@@ -1,8 +1,10 @@
-﻿using System;
+﻿using _301._3_Development.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace _301._3_Development.Services
@@ -13,7 +15,11 @@ namespace _301._3_Development.Services
 
         public ApiClient(string baseUrl)
         {
-            _http = new HttpClient
+            // note to self, this is unsecure as hell, CHANGE THIS
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+            _http = new HttpClient(handler)
             {
                 BaseAddress = new Uri(baseUrl)
             };
@@ -40,10 +46,12 @@ namespace _301._3_Development.Services
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
             var response = await _http.PostAsync(url, content);
+            string raw = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
-
-            var responseJson = await response.Content.ReadAsStringAsync();
-            return System.Text.Json.JsonSerializer.Deserialize<T>(responseJson);
+            return JsonSerializer.Deserialize<T>(raw, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
         }
     }
 }

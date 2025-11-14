@@ -66,11 +66,11 @@ namespace _301._3_Development.Pages
             patient.Medical_History = "Null";
             
             Random random = new Random();
-            patient.FirstName = _Name.Split()[0];
-            patient.LastName = _Name.Split()[1];
+            patient.Name_First = _Name.Split()[0];
+            patient.Name_Last = _Name.Split()[1];
             patient.Email = random.Next(1, 1000).ToString();
             patient.Phone = _Phone;
-            patient.Role = Scripts.User.UserRole.Patient;
+            patient.Role = "Patient";
             patient.PasswordHash = "SecretPassword";
 
             return patient;

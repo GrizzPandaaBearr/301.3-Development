@@ -25,12 +25,12 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Button x:Name="LogOutBtn" Content="Logout" Grid.Column="0" Grid.ColumnSpan="2" Click="LogOutBtn_Click"/>
             <Button x:Name="ActivateHamburger" Content="x" Grid.Column="0" Grid.ColumnSpan="4" Click="ActivateHamburger_Click"/>
         </Grid>
         
 
         <!-- Sample button styling, this will be generated on parent initialization-->
-        <Button x:Name="sampleButton" Content="Page1" Grid.Row="2"></Button>
 
     </Grid>
 </UserControl>

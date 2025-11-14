@@ -19,7 +19,7 @@ namespace _301._3_Development
         }
         private void LoadLogs()
         {
-            var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
+            /*var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
             var display = users.Select(u =>
             {
                 var pwd = "[decryption error]";
@@ -28,7 +28,7 @@ namespace _301._3_Development
                 return new {Username = u.Username, DecryptedPassword = pwd };
             }).ToList();
 
-            LogsDataGrid.ItemsSource = display;
+            LogsDataGrid.ItemsSource = display;*/
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)

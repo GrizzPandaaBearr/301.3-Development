@@ -76,8 +76,8 @@ namespace _301._3_Development.Scripts.Repos
         private void SetUser(Patient patient)
         {
             user = new User();
-            user.FirstName = patient.FirstName;
-            user.LastName = patient.LastName;
+            user.Name_First = patient.Name_First;
+            user.Name_Last = patient.Name_Last;
             user.Email = patient.Email;
             user.Phone = patient.Phone;
             user.PasswordHash = patient.PasswordHash;
@@ -88,7 +88,7 @@ namespace _301._3_Development.Scripts.Repos
         {
             Debug.Write("User");
 
-            Debug.WriteLine(user.FirstName); Debug.WriteLine(user.LastName); Debug.WriteLine(user.Email); Debug.WriteLine(user.Phone); Debug.WriteLine(user.PasswordHash); Debug.WriteLine(user.Role);
+            Debug.WriteLine(user.Name_First); Debug.WriteLine(user.Name_Last); Debug.WriteLine(user.Email); Debug.WriteLine(user.Phone); Debug.WriteLine(user.PasswordHash); Debug.WriteLine(user.Role);
             Debug.WriteLine("Patient");
             Debug.Write(userid);
             Debug.WriteLine(patient.Birth_Place); Debug.WriteLine(patient.Birth_Date); Debug.WriteLine(patient.Sex); Debug.WriteLine(patient.DoctorID); Debug.WriteLine(patient.Medical_History);

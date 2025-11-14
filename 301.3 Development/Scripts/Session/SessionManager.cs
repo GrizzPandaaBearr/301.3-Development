@@ -1,8 +1,10 @@
-﻿using System;
+﻿using _301._3_Development.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _301._3_Development.models;
 
 namespace _301._3_Development.Scripts.Session
 {
@@ -11,7 +13,7 @@ namespace _301._3_Development.Scripts.Session
         private static SessionManager _instance;
         private static readonly object _lock = new();
 
-        public User CurrentUser { get; private set; }
+        public UserDTO CurrentUser { get; private set; }
         public byte[] SessionKey { get; private set; }
         public DateTime SessionStartTime { get; private set; }
         public TimeSpan SessionTimeout { get; set; } = TimeSpan.FromMinutes(30);
@@ -29,7 +31,15 @@ namespace _301._3_Development.Scripts.Session
             }
         }
 
+        public ApiClient Api { get; private set; }
+        public string JwtToken { get; private set; }
+
         public bool IsLoggedIn => CurrentUser != null;
+
+        private SessionManager()
+        {
+            Api = new ApiClient("https://192.168.1.43:5001/api/");
+        }
 
         public bool IsSessionActive()
         {
@@ -37,23 +47,23 @@ namespace _301._3_Development.Scripts.Session
             return (DateTime.Now - SessionStartTime) < SessionTimeout;
         }
 
-        public void StartSession(User user, byte[] sessionKey)
+        public void StartSession(UserDTO user, string token)
         {
             CurrentUser = user;
-            SessionKey = sessionKey;
+            JwtToken = token;
+            Api.SetToken(token);
             SessionStartTime = DateTime.Now;
         }
 
         public void EndSession()
         {
             // Wipe sensitive data from memory
-            if (SessionKey != null)
-            {
-                Array.Clear(SessionKey, 0, SessionKey.Length);
-                SessionKey = null;
-            }
-
+            
             CurrentUser = null;
+            JwtToken = null;
+            Api.SetToken(null);
+
+            
         }
         /*
           usage:::

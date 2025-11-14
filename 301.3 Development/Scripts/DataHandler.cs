@@ -93,7 +93,7 @@ namespace _301._3_Development.Scripts
                     if (i == 0)
                     {
                         Debug.Write($"Patient ID: {reader.GetInt32(i)} ");
-                        patient.Id = reader.GetInt32(i);
+                        patient.UserID = reader.GetInt32(i);
                     }
                     else
                     {

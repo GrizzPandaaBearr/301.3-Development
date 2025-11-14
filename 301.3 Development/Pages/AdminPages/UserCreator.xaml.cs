@@ -1,30 +1,34 @@
 ﻿using _301._3_Development.models;
 using _301._3_Development.Scripts.Session;
-using _301._3_Development.Security;
-using _301._3_Development.Services;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace _301._3_Development
+namespace _301._3_Development.Pages.AdminPages
 {
-    public partial class signup : Page
+    /// <summary>
+    /// Interaction logic for UserCreator.xaml
+    /// </summary>
+    public partial class UserCreator : Page
     {
-        private readonly AesGcmEncryptionService _encService;
-        public event EventHandler LoginSuccess;
-
-        public signup()
+        private readonly UserDTO _userDTO;
+        public UserCreator(UserDTO user)
         {
+            _userDTO = user;
             InitializeComponent();
-            _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
         }
-        private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             // Simple input validation
@@ -44,7 +48,7 @@ namespace _301._3_Development
                 Email = TxtEmail.Text,
                 Phone = TxtPhone.Text,
                 Password = TxtPassword.Password,
-                Role = "Patient"
+                Role = TxtRole.Text
             };
 
             try
@@ -56,13 +60,7 @@ namespace _301._3_Development
                 {
                     MessageBox.Show($"Registration successful: {response.Message}");
 
-                    // Optional: start session automatically
-                    if (response.User != null && !string.IsNullOrEmpty(response.Token))
-                    {
-                        /*SessionManager.Instance.StartSession(response.User, response.Token);
-                        MessageBox.Show("Session started for user!");*/
-                        NavigationService?.Navigate(new login());
-                    }
+                    return;
                 }
             }
             catch (HttpRequestException ex)
@@ -73,11 +71,6 @@ namespace _301._3_Development
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}");
             }
-        }
-
-        private void BtnGoToLogin_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new login());
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿<Page x:Class="_301._3_Development.Pages.PatientPages.PatientHistoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_301._3_Development.Pages.PatientPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PatientHistoryPage">
+
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Medical History"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0 0 0 20"/>
+
+            <TextBlock x:Name="HistoryText"
+                       TextWrapping="Wrap"
+                       Background="White"
+                       Padding="10"
+                       />
+        </StackPanel>
+    </Grid>
+</Page>

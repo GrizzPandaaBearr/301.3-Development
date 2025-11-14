@@ -8,34 +8,23 @@ namespace _301._3_Development.Scripts
 {
     public class User
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        
-        public enum UserRole
-        {
-            Admin,
-            Doctor,
-            Patient
-        }
+        public int UserID { get; set; }
+        public string Email { get; set; } = null!;
+        public string PasswordHash { get; set; } = null!;
+        public string Role { get; set; } = null!;
+        public string Name_First { get; set; } = null!;
+        public string Name_Last { get; set; } = null!;
+        public string? Phone { get; set; }
+        public byte[] Verifier { get; set; } = Array.Empty<byte>();
+        public byte[] Salt { get; set; } = Array.Empty<byte>();
+        public DateTime Created_At { get; set; }
+        public DateTime Updated_At { get; set; }
 
-        public UserRole Role {  get; set; }
-        public string Phone { get; set; }
-
-
-        public void SetDummyUser()
-        {
-            Id = 0;
-            FirstName = "DummyFirstName";
-            LastName = "DummyLastName";
-            Email = "DummyFirstName@gmail.com";
-            PasswordHash = "DummyPasswordHash";
-            Role = UserRole.Patient;
-            Phone = "092843752787";
-        }
+        public Patient? Patient { get; set; }
+        public Doctor? Doctor { get; set; }
+        public Admin? Admin { get; set; }
+        public List<ActivityLog> ActivityLogs { get; set; } = new();
     }
 
-    
+
 }
