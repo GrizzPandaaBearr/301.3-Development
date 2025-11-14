@@ -28,13 +28,13 @@ namespace _301._3_Development.Services
         public async Task<bool> UpdateAppointmentStatus(int appointmentId, string status)
         {
             var data = new { Status = status };
-            var result = await SessionManager.Instance.Api.PostAsync<object>($"Appointments/{appointmentId}/status", data);
+            var result = await SessionManager.Instance.Api.PutAsync<object>($"Appointments/{appointmentId}/status", data);
 
             return result != null;
         }
         public async Task<bool> CancelAppointment(int appointmentId)
         {
-            var result = await SessionManager.Instance.Api.PostAsync<object>($"Appointments/{appointmentId}/cancel", null);
+            var result = await SessionManager.Instance.Api.PutAsync<object>($"Appointments/{appointmentId}/cancel", null);
 
             return result != null;
         }
@@ -56,7 +56,23 @@ namespace _301._3_Development.Services
                 PropertyNameCaseInsensitive = true
             });
         }
+        public async Task<T?> PutAsync<T>(string url, object data)
+        {
+            var json = JsonSerializer.Serialize(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var response = await _http.PutAsync(url, content);
+
+            string raw = await response.Content.ReadAsStringAsync();
+            MessageBox.Show($"RAW PUT RESPONSE:\n{raw}");
+
+            response.EnsureSuccessStatusCode();
+
+            return JsonSerializer.Deserialize<T>(raw, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        }
         public async Task<T?> PostAsync<T>(string url, object data)
         {
             var json = System.Text.Json.JsonSerializer.Serialize(data);

@@ -26,6 +26,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Button Content="Cancel Appointment" Click="Cancel_Click" Width="150" />
         </StackPanel>
     </Grid>
 </Page>

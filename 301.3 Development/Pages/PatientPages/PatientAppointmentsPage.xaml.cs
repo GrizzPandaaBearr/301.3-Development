@@ -49,5 +49,33 @@ namespace _301._3_Development.Pages.PatientPages
             var appointments = await FetchAppointmentsAsync(SessionManager.Instance.CurrentUser.UserID);
             AppointmentsListView.ItemsSource = appointments;
         }
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = AppointmentsListView.SelectedItem as AppointmentDTO;
+            if (selected == null) return;
+            if (selected.Status == "Completed" || selected.Status == "Cancelled") { MessageBox.Show("Appointment Is Unavailabe"); return; }
+            bool ok = await SessionManager.Instance.Api.CancelAppointment(selected.AppointmentID);
+
+            if (ok)
+            {
+                MessageBox.Show("Appointment canceled");
+                await LoadAppointments();
+            }
+        }
+        private async Task LoadAppointments()
+        {
+            try
+            {
+                int patientId = _user.UserID;
+
+                var appts = await FetchAppointmentsAsync(patientId);
+
+                AppointmentsListView.ItemsSource = appts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load appointments: {ex.Message}");
+            }
+        }
     }
 }

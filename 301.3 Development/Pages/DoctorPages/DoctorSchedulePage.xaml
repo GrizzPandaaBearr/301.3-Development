@@ -19,7 +19,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Patient" DisplayMemberBinding="{Binding PatientName}" />
-                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" />
+                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Appointment_Date}" />
                         <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
                     </GridView>
                 </ListView.View>
