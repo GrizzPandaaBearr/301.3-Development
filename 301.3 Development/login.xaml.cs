@@ -26,6 +26,13 @@ namespace _301._3_Development
             string username = txtUsername.Text?.Trim();
             string password = txtPassword.Password;
 
+            //Connect to database instead of local storage
+
+
+
+
+            ///
+
             var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
             var user = users.FirstOrDefault(u => u.Username == username);
 
