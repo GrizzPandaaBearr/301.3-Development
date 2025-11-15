@@ -25,10 +25,8 @@ namespace _301._3_Development
         {
             var request = new
             {
-                //Email = txtUsername.Text?.Trim(),
-                //Password = txtPassword.Password
-                Email = "123@gmail.com",
-                Password = "Pass"
+                Email = txtUsername.Text?.Trim(),
+                Password = txtPassword.Password
             };
 
             try
@@ -50,46 +48,7 @@ namespace _301._3_Development
                 MessageBox.Show("Login error: " + ex.Message);
             }
 
-            /*string email = txtUsername.Text?.Trim();
-            string password = txtPassword.Password;
-*/
-            //Connect to database instead of local storage
-
-
-
-
-            ///
-
-            /*var users = EncryptedStorage.LoadEncrypted<UserDTO>(_encService);
-            var user = users.FirstOrDefault(u => u.Username == username);
-
-            if (user == null)
-            {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            bool valid = PasswordHasher.VerifyPassword(password, user.PasswordHash);
-            if (valid)
-            {
-                MessageBox.Show("Login successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                byte[] sessionkey = KeyManager.GetOrCreateKey();
-                if (sessionkey == null)
-                {
-                    Debug.WriteLine("Session failed to create key");
-                    return;
-                }
-
-                //experimental
-                User dummy = new User();
-                dummy.SetDummyUser();
-                SessionManager.Instance.StartSession(dummy,sessionkey);
-                LoginSuccess?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+            
         }
         private void BtnGoToSignup_Click(object sender, RoutedEventArgs e)
         {

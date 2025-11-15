@@ -13,7 +13,7 @@ namespace _301._3_Development.Services
     public class ApiClient
     {
         private readonly HttpClient _http;
-
+        // post an async request to server, using url to controller and sending a data package
         public ApiClient(string baseUrl)
         {
             // note to self, this is unsecure as hell, CHANGE THIS
@@ -46,7 +46,6 @@ namespace _301._3_Development.Services
 
         public async Task<T?> GetAsync<T>(string url)
         {
-            MessageBox.Show(url);
             var response = await _http.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
@@ -60,7 +59,6 @@ namespace _301._3_Development.Services
 
         public async Task<T?> PutAsync<T>(string url, object data)
         {
-            MessageBox.Show(url);
 
             var json = JsonSerializer.Serialize(data);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -68,7 +66,6 @@ namespace _301._3_Development.Services
             var response = await _http.PutAsync(url, content);
 
             string raw = await response.Content.ReadAsStringAsync();
-            MessageBox.Show($"RAW PUT RESPONSE:\n{raw}");
 
             response.EnsureSuccessStatusCode();
 
@@ -77,9 +74,9 @@ namespace _301._3_Development.Services
                 PropertyNameCaseInsensitive = true
             });
         }
+        // post an async request to server, using url to controller and sending a data package
         public async Task<T?> PostAsync<T>(string url, object data)
         {
-            MessageBox.Show(url);
             var json = System.Text.Json.JsonSerializer.Serialize(data);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
