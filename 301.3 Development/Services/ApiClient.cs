@@ -46,18 +46,22 @@ namespace _301._3_Development.Services
 
         public async Task<T?> GetAsync<T>(string url)
         {
+            MessageBox.Show(url);
             var response = await _http.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            MessageBox.Show(json);
+            
             return System.Text.Json.JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
         }
+
         public async Task<T?> PutAsync<T>(string url, object data)
         {
+            MessageBox.Show(url);
+
             var json = JsonSerializer.Serialize(data);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -75,6 +79,7 @@ namespace _301._3_Development.Services
         }
         public async Task<T?> PostAsync<T>(string url, object data)
         {
+            MessageBox.Show(url);
             var json = System.Text.Json.JsonSerializer.Serialize(data);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 

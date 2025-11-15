@@ -1,10 +1,12 @@
-﻿/*using _301._3_Development.Scripts.Session;
+﻿using _301._3_Development.Scripts.Session;
 using _301._3_Development.Services;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -25,32 +27,12 @@ namespace _301._3_Development.Scripts
             {
                 string path = saveDialog.FileName;
 
-                try
-                {
-                    string json = await SessionManager.Instance.Api.GetAsync<string>($"/Export/patient/{patientId}");
+                var data = await SessionManager.Instance.Api.GetAsync<object>($"Auth/patient/export/{patientId}");
 
-                    // Save file
-                    await File.WriteAllTextAsync(path, json);
-
-                    MessageBox.Show(
-                        $"Export complete!\nSaved to:\n{path}",
-                        "Success",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Information
-                    );
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(
-                        "Failed to export patient data:\n" + ex.Message,
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                }
+                var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(path, json);
             }
         }
 
     }
 }
-*/

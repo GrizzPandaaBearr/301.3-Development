@@ -1,8 +1,16 @@
-﻿using System;
+﻿using _301._3_Development.models;
+using _301._3_Development.Pages.AdminPages;
+using _301._3_Development.Pages.DoctorPages;
+using _301._3_Development.Pages.PatientPages;
+using _301._3_Development.Scripts;
+using _301._3_Development.Scripts.Session;
+using _301._3_Development.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,14 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using _301._3_Development.Scripts;
-using _301._3_Development.Pages.PatientPages;
-using _301._3_Development.Pages.AdminPages;
-using _301._3_Development.Pages.DoctorPages;
-using _301._3_Development.models;
-using _301._3_Development.Services;
 using UserControl = System.Windows.Controls.UserControl;
-using _301._3_Development.Scripts.Session;
 
 namespace _301._3_Development.Controls
 {
@@ -106,8 +107,14 @@ namespace _301._3_Development.Controls
                 ("Profile", () => mainFrame.Content = new PatientProfilePage(_user)),
                 ("Appointments", () => mainFrame.Content = new PatientAppointmentsPage(_user)),
                 ("Medical History", () => mainFrame.Content = new PatientHistoryPage(_user)),
-                ("Book Appointment", () => mainFrame.Content = new PatientBookAppointmentPage(_user))
+                ("Book Appointment", () => mainFrame.Content = new PatientBookAppointmentPage(_user)),
+                ("Export", () => Export() )
             };
+        }
+        private async void Export()
+        {
+            ExportManager exportManager = new ExportManager();
+            await exportManager.ExportPatientInfoAsync(_user.UserID);
         }
         private List<(string Label, Action ClickAction)> SetDoctorControls()
         {

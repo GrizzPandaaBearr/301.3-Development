@@ -25,10 +25,10 @@ namespace _301._3_Development
         {
             var request = new
             {
-                Email = txtUsername.Text?.Trim(),
-                Password = txtPassword.Password
-                /*Email = "patient@gmail.com",
-                Password = "BlueHippo68"*/
+                //Email = txtUsername.Text?.Trim(),
+                //Password = txtPassword.Password
+                Email = "123@gmail.com",
+                Password = "Pass"
             };
 
             try
