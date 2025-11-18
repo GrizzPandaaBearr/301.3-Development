@@ -1,5 +1,6 @@
 ﻿using _301._3_Development.models;
 using _301._3_Development.Scripts.Session;
+using _301._3_Development.Pages.AdminPages.RolePages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,15 @@ namespace _301._3_Development.Pages.AdminPages
     public partial class UserCreator : Page
     {
         private readonly UserDTO _userDTO;
+
+        private PatientInfo _patientInfo;
+        private DoctorInfo _doctorInfo;
+        private AdminInfo _adminInfo;
         public UserCreator(UserDTO user)
         {
             _userDTO = user;
             InitializeComponent();
+            _patientInfo = new PatientInfo();
         }
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
@@ -48,7 +54,7 @@ namespace _301._3_Development.Pages.AdminPages
                 Email = TxtEmail.Text,
                 Phone = TxtPhone.Text,
                 Password = TxtPassword.Password,
-                Role = TxtRole.Text
+                Role = ComboRole.SelectionBoxItem.ToString()
             };
 
             try
@@ -70,6 +76,25 @@ namespace _301._3_Development.Pages.AdminPages
             catch (Exception ex)
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}");
+            }
+        }
+
+        private void ComboRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string role = ComboRole.SelectedItem.ToString();
+            switch( role )
+            {
+                case "Patient":
+                    FrameRole.Content = _patientInfo;
+                    break;
+                case "Doctor":
+                    FrameRole.Content = _doctorInfo;
+                    break;
+                case "Admin":
+                    FrameRole.Content = _adminInfo;
+                    break;
+                default:
+                    break;
             }
         }
     }

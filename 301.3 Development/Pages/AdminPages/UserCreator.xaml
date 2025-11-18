@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="First Name:" Grid.Row="0"/>
@@ -36,10 +37,16 @@
 
         <TextBlock Text="Role:" Grid.Row="5" Margin="0,10,0,0"/>
 
-        <TextBox x:Name="TxtRole" Grid.Row="5" Margin="120,10,0,0" Width="200"/>
+        <ComboBox SelectionChanged="ComboRole_SelectionChanged" x:Name="ComboRole" Grid.Row="5" Margin="120,10,0,0" Width="200">
+            <ComboBoxItem Tag="Patient" Content="Patient"/>
+            <ComboBoxItem Tag="Doctor" Content="Doctor"/>
+            <ComboBoxItem Tag="Admin" Content="Admin"/>
+        </ComboBox>
+        <Frame x:Name="FrameRole" Grid.Row="6">
+            
+        </Frame>
 
-
-        <Button Content="Register" Grid.Row="6" Margin="0,20,0,0" Width="100"
+            <Button Content="Register" Grid.Row="7" Margin="0,20,0,0" Width="100"
         HorizontalAlignment="Left"
         Click="BtnRegister_Click"/>
     </Grid>
