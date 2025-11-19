@@ -26,22 +26,6 @@ namespace _301._3_Development
             
         }
 
-        private void BtnRegister_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Navigate to Registration Form Page.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            NavigationService.Navigate(new patientdataform());
-        }
-
-        private void BtnViewData_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Navigate to View Data Page.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //NavigationService.Navigate(new finalform());
-        }
-
-        private void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Data exported to image.", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //implement export logic here
-        }
+        
     }
 }

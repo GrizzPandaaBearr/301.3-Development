@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using SecureRemotePassword;
 using Eneter.SecureRemotePassword;
 using System.Text;
+using System.Text.Json;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -17,12 +20,14 @@ public class AuthController : ControllerBase
     private readonly MyDbContext _context;
     private readonly IConfiguration _config;
     private readonly IRoleEntityFactory _roleFactory;
+    private readonly EncryptionService _encryption;
 
-    public AuthController(IConfiguration config ,MyDbContext context, IRoleEntityFactory rolefactory)
+    public AuthController(IConfiguration config ,MyDbContext context, IRoleEntityFactory rolefactory, EncryptionService encryption)
     {
         _config = config;
         _context = context;
         _roleFactory = rolefactory;
+        _encryption = encryption;
     }
 
 
@@ -63,6 +68,7 @@ public class AuthController : ControllerBase
         var token = GenerateJwtToken(user.UserID.ToString(), user.Role);
         //var roleData = GetRoleData(user);
         UserDTO userDTO = await BuildUserDTO(user);
+        await LogActivity(userDTO.UserID,"User Logged in");
         return Ok(new
         {
             Message = "Login success",
@@ -71,6 +77,8 @@ public class AuthController : ControllerBase
             
         });
     }
+
+    [Authorize]
     [HttpGet("patient/export/{userId}")]
     public async Task<IActionResult> ExportPatient(int userId)
     {
@@ -96,7 +104,8 @@ public class AuthController : ControllerBase
             .ToListAsync();
 
         // Build export object
-        var exportData = new
+        string medicalHistory = _encryption.Decrypt(user.Patient.Medical_History);
+        var exportData = new 
         {
             User = new
             {
@@ -114,89 +123,125 @@ public class AuthController : ControllerBase
                 user.Patient.Birth_Date,
                 user.Patient.Birth_Place,
                 user.Patient.Sex,
-                user.Patient.Medical_History,
+                medicalHistory,
                 user.Patient.DoctorID
             },
             Appointments = appointments
         };
-
+        await LogActivity(userId,"User Exported User data");
         return Ok(exportData);
     }
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
-        if (await _context.Users.AnyAsync(u => u.Email == model.Email))
-            return BadRequest("Email already registered");
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        var (hash, salt) = HashPassword(model.Password);
-
-        var newUser = new User
+        try
         {
-            Email = model.Email,
-            PasswordHash = hash,
-            Salt = salt,
-            Name_First = model.FirstName,
-            Name_Last = model.LastName,
-            Phone = model.Phone,
-            Role = model.Role ?? "Patient",
-            Created_At = DateTime.UtcNow,
-            Updated_At = DateTime.UtcNow
-        };
+            if (await _context.Users.AnyAsync(u => u.Email == model.Email))
+                return BadRequest("Email already registered");
 
-        _context.Users.Add(newUser);
-        await _context.SaveChangesAsync();
+            var (hash, salt) = HashPassword(model.Password);
+            Console.WriteLine("Passed email check and pass hashing/salting");
+            var newUser = new User
+            {
+                Email = model.Email,
+                PasswordHash = hash,
+                Salt = salt,
+                Name_First = model.FirstName,
+                Name_Last = model.LastName,
+                Phone = model.Phone,
+                Role = model.Role ?? "Patient",
+                Created_At = DateTime.UtcNow,
+                Updated_At = DateTime.UtcNow
+            };
 
-        // Create corresponding role entry
-        switch (newUser.Role)
-        {
-            case "Patient":
-                var patient = new Patient
-                {
-                    PatientID = newUser.UserID,
-                    Birth_Place = model.Birth_Place,
-                    Birth_Date = model.Birth_Date,
-                    Sex = model.Sex,
-                    DoctorID = model.DoctorID,
-                    Medical_History = model.Medical_History
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+            
+            Console.WriteLine("TRYING NEW ROLE CREATION");
 
-                };
-                _context.Patients.Add(patient);
-                newUser.Patient = patient;
-                break;
+            // Create corresponding role entry
+            switch (model.Role)
+            {
+                case "Patient":
+                    if (model.Patient != null)
+                    {
+                        var patient = new Patient
+                        {
+                            PatientID = newUser.UserID,
+                            Birth_Place = model.Patient.BirthPlace,
+                            Birth_Date = model.Patient.BirthDate ?? null,
+                            Sex = model.Patient.Sex,
+                            DoctorID = model.Patient.DoctorID,
+                            Medical_History = _encryption.Encrypt(model.Patient.MedicalHistory) 
 
-            case "Doctor":
-                var doctor = new Doctor
-                {
-                    DoctorID = newUser.UserID
+                        };
+                        _context.Patients.Add(patient);
+                        newUser.Patient = patient;
+                        break;
+                    }
+                    return BadRequest("user.patient == null");
+                    
 
-                };
-                _context.Doctors.Add(doctor);
-                newUser.Doctor = doctor;
-                break;
+                case "Doctor":
+                    if(model.Doctor != null)
+                    {
+                        var doctor = new Doctor
+                        {
+                            DoctorID = newUser.UserID,
+                            Specialization = model.Doctor.Specialization,
+                            License_Number = model.Doctor.LicenseNumber,
+                            Office_Phone = model.Doctor.OfficePhone,
+                            Experience_Years = model.Doctor.ExperienceYears
 
-            case "Admin":
-                var admin = new Admin
-                {
-                    AdminID = newUser.UserID,
-                    Access_Level = "Low"
-                };
-                _context.Admins.Add(admin);
-                newUser.Admin = admin;
-                break;
+                        };
+                        _context.Doctors.Add(doctor);
+                        newUser.Doctor = doctor;
+                        break;
+                    }
+                    return BadRequest("user.doctor == null");
+                    
+
+                case "Admin":
+                    if(model.Admin != null)
+                    {
+                        var admin = new Admin
+                        {
+                            AdminID = newUser.UserID,
+                            Access_Level = model.Admin.AccessLevel
+                        };
+                        _context.Admins.Add(admin);
+                        newUser.Admin = admin;
+                        break;
+                    }
+                    return BadRequest("user.admin == null");
+                default:
+                return BadRequest("Something went wrong in role creation");
+            }
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            var token = GenerateJwtToken(newUser.UserID.ToString(), newUser.Role);
+            var roleData = GetRoleData(newUser);
+            await LogActivity(newUser.UserID,$"User Registered as {model.Role}");
+            return Ok(new
+            {
+                message = $"Registered as {newUser.Name_First}, Role = {newUser.Role}",
+                accessToken = token,
+                roleData
+            });
         }
-
-        await _context.SaveChangesAsync();
-
-        var token = GenerateJwtToken(newUser.UserID.ToString(), newUser.Role);
-        var roleData = GetRoleData(newUser);
-
-        return Ok(new
+        catch(Exception ex)
         {
-            message = $"Registered as {newUser.Name_First}, Role = {newUser.Role}",
-            accessToken = token,
-            roleData
-        });
+            //Roll back changes if anything fails, preserve data integrity
+            await transaction.RollbackAsync();
+            return BadRequest(ex.Message);
+        }
+        
     }
+
+    [Authorize]
     [HttpPost("book")]
     public async Task<IActionResult> BookAppointment([FromBody] AppointmentCreateDTO dto)
     {
@@ -220,6 +265,8 @@ public class AuthController : ControllerBase
 
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
+
+        await LogActivity(dto.PatientID, $"User Booked an appointment with doctor:{dto.DoctorID}, on {dto.Date}");
 
         return Ok(new
         {
@@ -256,7 +303,7 @@ public class AuthController : ControllerBase
                     BirthDate = patient.Birth_Date,
                     Sex = patient.Sex,
                     DoctorID = patient.DoctorID,
-                    MedicalHistory = patient.Medical_History
+                    MedicalHistory = _encryption.Decrypt(patient.Medical_History)
                 };
             }
         }
@@ -396,6 +443,79 @@ public class AuthController : ControllerBase
         );
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    string PadBase64(string base64)
+    {
+        switch (base64.Length % 4)
+        {
+            case 2: base64 += "=="; break;
+            case 3: base64 += "="; break;
+        }
+        return base64.Replace('-', '+').Replace('_', '/');
+    }
+
+    [Authorize]
+    [HttpGet("logs")]
+    public async Task<IActionResult> GetLogs()
+    {
+        //TESTING JWT TOKEN
+        var rawToken = Request.Headers["Authorization"]
+        .ToString()
+        .Replace("Bearer ", "");
+        Console.WriteLine("Raw Token:");
+        Console.WriteLine(rawToken);
+
+        var payload = rawToken.Split('.')[1];
+        string jsonraw = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(PadBase64(payload)));
+        var jsonPretty = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonraw);
+        Console.WriteLine("Token Decoded:\n");
+
+        foreach (var kvp in jsonPretty)
+        {
+            string key = kvp.Key switch
+            {
+                "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier" => "UserId",
+                "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" => "Role",
+                _ => kvp.Key
+            };
+
+            Console.WriteLine($"{key}: {kvp.Value}");
+        }
+
+        var logs = await _context.ActivityLogs
+            .OrderByDescending(l => l.Timestamp)
+            .Take(100) // limit to recent 100
+            .Select(l => new ActivityLogDTO
+            {
+                LogID = l.LogID,
+                UserID = l.UserID,
+                Action = l.Action,
+                Timestamp = l.Timestamp 
+            })
+            .ToListAsync();
+
+        return Ok(logs);
+    }
+    private async Task LogActivity(int userId, string action)
+    {
+        var log = new ActivityLog
+        {
+            UserID = userId,
+            Action = action,
+            Timestamp = DateTime.UtcNow
+        };
+        try
+        {
+            _context.ActivityLogs.Add(log);
+            await _context.SaveChangesAsync();
+        }
+        catch(Exception ex)
+        {
+
+            Console.WriteLine("Error occured in logging",ex.Message);
+        }
+        
+    }
+
 }
 
 

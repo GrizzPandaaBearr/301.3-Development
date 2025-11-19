@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _301._3_Development.Scripts;
 
 namespace _301._3_Development.Pages.AdminPages
 {
@@ -39,6 +40,8 @@ namespace _301._3_Development.Pages.AdminPages
         }
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
+            PasswordValidator passwordValidator = new PasswordValidator();
+
             // Simple input validation
             if (string.IsNullOrWhiteSpace(TxtFirstName.Text) ||
                 string.IsNullOrWhiteSpace(TxtLastName.Text) ||
@@ -49,11 +52,18 @@ namespace _301._3_Development.Pages.AdminPages
                 return;
             }
 
+            string email = TxtEmail.Text;
+            string password = TxtPassword.Password;
+
+            if (!IsEmailValid(TxtEmail.Text)) { MessageBox.Show("Invalid Email Format."); return; }
+
+            if (!passwordValidator.Validate(password, email)) { MessageBox.Show(passwordValidator.GetError()); }
+
             var request = new RegisterRequest
             {
                 FirstName = TxtFirstName.Text,
                 LastName = TxtLastName.Text,
-                Email = TxtEmail.Text,
+                Email = TxtEmail.Text.Trim(),
                 Phone = TxtPhone.Text,
                 Password = TxtPassword.Password,
                 Role = ComboRole.SelectionBoxItem.ToString()
@@ -97,7 +107,24 @@ namespace _301._3_Development.Pages.AdminPages
                 MessageBox.Show($"Unexpected error: {ex.Message}");
             }
         }
+        private bool IsEmailValid(string email)
+        {
+            var emailTrim = email.Trim();
 
+            if (emailTrim.EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == emailTrim;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void ComboRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string role = (ComboRole.SelectedItem as ComboBoxItem)?.Tag.ToString();

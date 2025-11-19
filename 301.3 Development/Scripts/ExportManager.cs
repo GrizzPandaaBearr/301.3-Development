@@ -3,6 +3,7 @@ using _301._3_Development.Services;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,11 +27,12 @@ namespace _301._3_Development.Scripts
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 string path = saveDialog.FileName;
-
                 var data = await SessionManager.Instance.Api.GetAsync<object>($"Auth/patient/export/{patientId}");
+                
 
                 var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(path, json);
+
             }
         }
 

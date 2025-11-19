@@ -1,4 +1,6 @@
 ﻿using _301._3_Development.models;
+using _301._3_Development.Pages.AdminPages.RolePages;
+using _301._3_Development.Scripts;
 using _301._3_Development.Scripts.Session;
 using _301._3_Development.Security;
 using _301._3_Development.Services;
@@ -14,11 +16,14 @@ namespace _301._3_Development
     {
         private readonly AesGcmEncryptionService _encService;
         public event EventHandler LoginSuccess;
+        private PatientInfo _patientInfo;
 
         public signup()
         {
             InitializeComponent();
             _encService = new AesGcmEncryptionService(App.AppEncryptionKey);
+            _patientInfo = new PatientInfo();
+            FrameRole.Content = _patientInfo;
         }
         private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
         {
@@ -27,6 +32,7 @@ namespace _301._3_Development
 
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
+            PasswordValidator passwordValidator = new PasswordValidator();
             // Simple input validation
             if (string.IsNullOrWhiteSpace(TxtFirstName.Text) ||
                 string.IsNullOrWhiteSpace(TxtLastName.Text) ||
@@ -36,7 +42,12 @@ namespace _301._3_Development
                 MessageBox.Show("Please fill all required fields.");
                 return;
             }
+            string email = TxtEmail.Text;
+            string password = TxtPassword.Password;
 
+            if (!IsEmailValid(TxtEmail.Text)) { MessageBox.Show("Invalid Email Format."); return; }
+
+            if (!passwordValidator.Validate(password, email)) { MessageBox.Show(passwordValidator.GetError()); }
             var request = new RegisterRequest
             {
                 FirstName = TxtFirstName.Text,
@@ -44,7 +55,9 @@ namespace _301._3_Development
                 Email = TxtEmail.Text,
                 Phone = TxtPhone.Text,
                 Password = TxtPassword.Password,
-                Role = "Patient"
+                Role = "Patient",
+                Patient = _patientInfo.GetDTO()
+                
             };
 
             try
@@ -72,6 +85,24 @@ namespace _301._3_Development
             catch (Exception ex)
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}");
+            }
+        }
+        private bool IsEmailValid(string email)
+        {
+            var emailTrim = email.Trim();
+
+            if (emailTrim.EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == emailTrim;
+            }
+            catch
+            {
+                return false;
             }
         }
 

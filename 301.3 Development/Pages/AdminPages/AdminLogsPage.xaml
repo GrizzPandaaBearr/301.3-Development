@@ -8,24 +8,71 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminLogsPage">
 
-    <Grid Margin="20" Background="White">
-        <DockPanel>
-            <TextBlock DockPanel.Dock="Top" x:Name="Header"
-                       FontSize="24"
-                       FontWeight="Bold"
-                       Margin="0 0 0 20"/>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <TextBlock x:Name="Header"/>
 
-            <ListBox x:Name="LogsList" Margin="20">
+
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <TextBox x:Name="SearchBox"
+                 Width="250"
+                 Margin="0 0 10 0"
+                 TextChanged="SearchBox_TextChanged"/>
+
+
+                    <ComboBox x:Name="SortCombo"
+                  Width="150"
+                  SelectionChanged="SortCombo_SelectionChanged">
+                        <ComboBoxItem Content="Timestamp (Newest)" />
+                        <ComboBoxItem Content="Timestamp (Oldest)" />
+                        <ComboBoxItem Content="User ID (A→Z)" />
+                        <ComboBoxItem Content="User ID (Z→A)" />
+                    </ComboBox>
+                </StackPanel>
+
+
+
+        
+            <ListBox x:Name="LogsList" BorderThickness="0" Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Timestamp, StringFormat=yyyy-MM-dd HH:mm:ss}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Action}" TextWrapping="Wrap"/>
-                            <TextBlock Text="{Binding UserID}" FontStyle="Italic" FontSize="12"/>
-                        </StackPanel>
+                        <Border Padding="12" Background="#FFF8F8F8" CornerRadius="8"
+                            BorderBrush="#FFE0E0E0" BorderThickness="1"
+                            Margin="0 0 0 10">
+
+                            <StackPanel>
+
+
+                                <TextBlock Text="Timestamp:" 
+                                       FontWeight="Bold" Foreground="#666"/>
+                                <TextBlock Text="{Binding Timestamp, StringFormat=yyyy-MM-dd HH:mm:ss}"
+                                       Foreground="#333" Margin="0 0 0 6"/>
+
+
+                                <TextBlock Text="Action:" 
+                                       FontWeight="Bold" Foreground="#666"/>
+                                <TextBlock Text="{Binding Action}"
+                                       TextWrapping="Wrap" Foreground="#444"
+                                       Margin="0 0 0 6"/>
+
+
+                                <TextBlock Text="User ID:" 
+                                       FontWeight="Bold" Foreground="#666"/>
+                                <TextBlock Text="{Binding UserID}"
+                                       FontStyle="Italic" FontSize="12"
+                                       Foreground="#777"/>
+
+                            </StackPanel>
+
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </DockPanel>
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
+
+    
 </Page>

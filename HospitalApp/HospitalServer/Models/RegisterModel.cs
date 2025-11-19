@@ -10,4 +10,9 @@ public class RegisterModel
     public DoctorDTO? Doctor { get; set; }
     public PatientDTO? Patient { get; set; }
     public AdminDTO? Admin { get; set; }
+
+    public void PrintValues(){
+        Console.WriteLine($"{Email}\n{Password}\n{FirstName}\n{LastName}\n{Phone}\n{Role}");
+        Patient.PrintValues();
+    }
 }

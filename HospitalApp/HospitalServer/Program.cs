@@ -5,6 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 // options.Listen(System.Net.IPAddress.Any,5000);
 var builder = WebApplication.CreateBuilder(args);
+//Generate master key
+var masterKey = MasterKeyProvider.GetMasterKey();
+builder.Services.AddSingleton(new EncryptionService(masterKey));
 
 builder.WebHost.ConfigureKestrel(options =>
 {

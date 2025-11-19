@@ -2,6 +2,7 @@
 using _301._3_Development.Scripts.Session;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,12 +40,13 @@ namespace _301._3_Development.Pages.DoctorPages
         public async Task<List<DoctorPatientDTO>> FetchMyPatientsAsync()
         {
             int doctorId = _user.UserID;
-
+            
             return await SessionManager.Instance.Api.GetAsync<List<DoctorPatientDTO>>($"Appointments/doctor/{doctorId}/patients");
         }
         private async Task LoadPatients()
         {
             var patients = await FetchMyPatientsAsync();
+
             PatientsListView.ItemsSource = patients;
         }
     }

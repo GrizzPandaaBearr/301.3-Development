@@ -6,4 +6,8 @@ public class PatientDTO
     public string Sex { get; set; }
     public int? DoctorID { get; set; }
     public string MedicalHistory { get; set; }
+
+    public void PrintValues(){
+        Console.WriteLine($"{BirthPlace}\n{BirthDate}\n{Sex}\n{DoctorID}\n{MedicalHistory}");
+    }
 }

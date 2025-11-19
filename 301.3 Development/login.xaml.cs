@@ -23,17 +23,16 @@ namespace _301._3_Development
 
         private async void BtnLogin_Click(object sender, RoutedEventArgs e) // check what role user is before redirecting
         {
+            
+
             var request = new
             {
                 Email = txtUsername.Text?.Trim(),
                 Password = txtPassword.Password
-                /*Email = "admin@gmail.com",
-                Password = "BlueHippo68"*/
             };
 
             try
             {
-                Debug.WriteLine($"Fetching user from server: {request.Email} {request.Password}");
                 var response = await SessionManager.Instance.Api.PostAsync<LoginResponse>("auth/login", request);
                 if (response != null)
                 {

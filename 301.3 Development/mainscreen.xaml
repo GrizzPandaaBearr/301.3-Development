@@ -24,16 +24,6 @@
         </Border>
 
         <TextBlock Text="Welcome to our digital registration form!" FontSize="14" Margin="10,10,146,134" Grid.Row="1"/>
-        <Button Content="Register New Patient" BorderBrush="Black" BorderThickness="1" 
-    Margin="25,54,266,85" Grid.Row="1" Background="#E6F7FF"
-    Click="BtnRegister_Click"/>
-
-        <Button Content="View Data" BorderBrush="Black" BorderThickness="1" 
-    Margin="146,116,145,23" Grid.Row="1" Background="#E6F7FF"
-    Click="BtnViewData_Click"/>
-
-        <Button Content="Export Data to Image" BorderBrush="Black" BorderThickness="1" 
-    Margin="266,54,25,85" Grid.Row="1" Background="#E6F7FF"
-    Click="BtnExport_Click"/>
+        
     </Grid>
 </Page>
