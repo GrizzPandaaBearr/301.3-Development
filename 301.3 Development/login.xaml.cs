@@ -27,6 +27,8 @@ namespace _301._3_Development
             {
                 Email = txtUsername.Text?.Trim(),
                 Password = txtPassword.Password
+                /*Email = "admin@gmail.com",
+                Password = "BlueHippo68"*/
             };
 
             try

@@ -10,6 +10,9 @@ namespace _301._3_Development.models
     {
         public int AdminID { get; set; }
         public string AccessLevel { get; set; }
+
+
+        
     }
 
 }

@@ -8,7 +8,21 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DoctorInfo">
 
-    <Grid>
+    <StackPanel Margin="20">
+        <TextBlock Text="Specialization"/>
+        <TextBox x:Name="TxtSpecialization" />
+
+        <TextBlock Text="Licence Number"/>
+        <TextBox x:Name="TxtLicenceNumber"/>
+
+        <TextBlock Text="Office Phone Number"/>
+        <TextBox x:Name="TxtPhoneNumber" />
         
-    </Grid>
+        
+        
+        <TextBlock Text="Experiece (Years)"/>
+        <TextBox x:Name="TxtExperience"/>
+
+
+    </StackPanel>
 </Page>

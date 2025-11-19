@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _301._3_Development.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace _301._3_Development.Pages.AdminPages.RolePages
         public PatientInfo()
         {
             InitializeComponent();
+        }
+        public PatientDTO GetDTO()
+        {
+            PatientDTO patient = new PatientDTO
+            {
+                BirthPlace = TxtBirthPlace.Text,
+                //Dredded calendar = CalBirthDay,
+                Sex = (ComboGender.SelectedItem as ComboBoxItem)?.Tag.ToString(),
+                MedicalHistory = TxtMedicalHistory.Text
+            };
+            return patient;
         }
     }
 }

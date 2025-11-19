@@ -8,7 +8,15 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminInfo">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Access Level"/>
+        <ComboBox x:Name="ComboAccessLevel">
+            <ComboBoxItem Tag="Low" Content="Low"/>
+            <ComboBoxItem Tag="Medium" Content="Medium"/>
+            <ComboBoxItem Tag="High" Content="High"/>
+        </ComboBox>
+
+
+    </StackPanel>
 </Page>

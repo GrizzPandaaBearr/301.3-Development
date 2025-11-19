@@ -14,5 +14,9 @@ namespace _301._3_Development.models
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
+
+        public DoctorDTO? Doctor { get; set; }
+        public AdminDTO? Admin { get; set; }
+        public PatientDTO? Patient { get; set; }
     }
 }

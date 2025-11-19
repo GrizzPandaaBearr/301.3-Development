@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _301._3_Development.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace _301._3_Development.Pages.AdminPages.RolePages
         public DoctorInfo()
         {
             InitializeComponent();
+        }
+        public DoctorDTO GetDTO()
+        {
+            int x = 0;
+
+            if (Int32.TryParse(TxtExperience.Text, out x))
+            {
+                MessageBox.Show("Experience years is not an integer, returning default (0)");
+            }
+            DoctorDTO doctor = new DoctorDTO
+            {
+                Specialization = TxtSpecialization.Text,
+                LicenseNumber = TxtLicenceNumber.Text,
+                OfficePhone = TxtPhoneNumber.Text,
+                ExperienceYears = x
+            };
+            return doctor;
         }
     }
 }

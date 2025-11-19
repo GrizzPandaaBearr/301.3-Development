@@ -34,6 +34,8 @@ namespace _301._3_Development.Pages.AdminPages
             _userDTO = user;
             InitializeComponent();
             _patientInfo = new PatientInfo();
+            _doctorInfo = new DoctorInfo();
+            _adminInfo = new AdminInfo();
         }
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
@@ -56,6 +58,23 @@ namespace _301._3_Development.Pages.AdminPages
                 Password = TxtPassword.Password,
                 Role = ComboRole.SelectionBoxItem.ToString()
             };
+            string role = (ComboRole.SelectedItem as ComboBoxItem)?.Tag.ToString();
+            switch (role)
+            {
+                case "Patient":
+                    request.Patient=_patientInfo.GetDTO();
+                    break;
+                case "Doctor":
+                    request.Doctor = _doctorInfo.GetDTO();
+                    break;
+                case "Admin":
+                    request.Admin = _adminInfo.GetDTO();
+                    break;
+                default:
+                    break;
+            }
+
+            MessageBox.Show(request.ToString() );
 
             try
             {
@@ -81,7 +100,7 @@ namespace _301._3_Development.Pages.AdminPages
 
         private void ComboRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string role = ComboRole.SelectedItem.ToString();
+            string role = (ComboRole.SelectedItem as ComboBoxItem)?.Tag.ToString();
             switch( role )
             {
                 case "Patient":
@@ -94,6 +113,7 @@ namespace _301._3_Development.Pages.AdminPages
                     FrameRole.Content = _adminInfo;
                     break;
                 default:
+                    MessageBox.Show("Something went wrong");
                     break;
             }
         }

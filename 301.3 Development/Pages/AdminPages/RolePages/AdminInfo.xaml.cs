@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _301._3_Development.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,15 @@ namespace _301._3_Development.Pages.AdminPages.RolePages
         public AdminInfo()
         {
             InitializeComponent();
+        }
+        public AdminDTO GetDTO()
+        {
+
+            AdminDTO doctor = new AdminDTO
+            {
+                AccessLevel = (ComboAccessLevel.SelectedItem as ComboBoxItem)?.Tag.ToString()
+            };
+            return doctor;
         }
     }
 }
