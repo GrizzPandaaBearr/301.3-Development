@@ -1,4 +1,5 @@
 ﻿using _301._3_Development.models;
+using _301._3_Development.Scripts.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,19 @@ namespace _301._3_Development.Pages.AdminPages
             _user = user;
 
             Header.Text = "System Logs";
+            LoadLogs();
+        }
+        private async void LoadLogs()
+        {
+            try
+            {
+                var logs = await SessionManager.Instance.Api.GetAsync<List<ActivityLogDTO>>("auth/logs");
+                LogsList.ItemsSource = logs;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load logs: {ex.Message}");
+            }
         }
     }
 }

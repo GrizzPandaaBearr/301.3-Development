@@ -8,17 +8,24 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminLogsPage">
 
-    <Grid Margin="20">
-        <StackPanel>
-            <TextBlock x:Name="Header"
+    <Grid Margin="20" Background="White">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" x:Name="Header"
                        FontSize="24"
                        FontWeight="Bold"
                        Margin="0 0 0 20"/>
 
-            <ListBox x:Name="LogsList"
-                     Height="350"
-                     Background="White"
-                     BorderBrush="#ccc" />
-        </StackPanel>
+            <ListBox x:Name="LogsList" Margin="20">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Timestamp, StringFormat=yyyy-MM-dd HH:mm:ss}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Action}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding UserID}" FontStyle="Italic" FontSize="12"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
     </Grid>
 </Page>
